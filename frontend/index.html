@@ -7,53 +7,69 @@
     <title>mkchar: make your new D&D character</title>
 </head>
 <body>
+<div id="playername">
+  <form>
+    <label>Enter or select your name:</label> <br>
+    <ul id="list-player-names">
 
-  <div class="container">
+    </ul>
+    <input type="text"> 
+    <button type="submit" id="playername-submit">Enter</button>
+  </form>
+</div>
+<div>
+  <div id="modal">
     <h1>character App</h1>
     <div class="new-character-container">
-        <form id="new-character-form">
+        <form id="new-character-form" class="hidden">
           <label for="class">Choose a Class:</label>
 
           <select id="class">
-            <option value="dwarf">Dwarf</option>
-            <option value="elf">Elf</option>
-            <option value="halfling">Halfling</option>
-            <option value="human">Human</option>
-            <option value="dragonborn">Dragonborn</option>
-            <option value="gnome">Gnome</option>
-            <option value="half-elf">Half-Elf</option>
-            <option value="half-orc">Half-Orc</option>
-            <option value="tiefling">Tiefling</option>
+            <option value="Dwarf">Dwarf</option>
+            <option value="Elf">Elf</option>
+            <option value="Halfling">Halfling</option>
+            <option value="Human">Human</option>
+            <option value="Dragonborn">Dragonborn</option>
+            <option value="Gnome">Gnome</option>
+            <option value="Half-Elf">Half-Elf</option>
+            <option value="Half-Orc">Half-Orc</option>
+            <option value="Tiefling">Tiefling</option>
           </select>
 
           <label for="race">Choose a race:</label>
           <select id="class">
-            <option value="barbarian">Barbarian</option>
-            <option value="bard">Bard</option>
-            <option value="cleric">Cleric</option>
-            <option value="druid">Druid</option>
-            <option value="fighter">Fighter</option>
-            <option value="monk">Monk</option>
-            <option value="paladin">Paladin</option>
-            <option value="ranger">Ranger</option>
-            <option value="rogue">Rogue</option>
-            <option value="sorcerer">Sorcerer</option>
-            <option value="warlock">Warlock</option>
-            <option value="wizard">Wizard</option>
+            <option value="Barbarian">Barbarian</option>
+            <option value="Bard">Bard</option>
+            <option value="Cleric">Cleric</option>
+            <option value="Druid">Druid</option>
+            <option value="Fighter">Fighter</option>
+            <option value="Monk">Monk</option>
+            <option value="Paladin">Paladin</option>
+            <option value="Ranger">Ranger</option>
+            <option value="Rogue">Rogue</option>
+            <option value="Sorcerer">Sorcerer</option>
+            <option value="Warlock">Warlock</option>
+            <option value="Wizard">Wizard</option>
         </select>
 
             <input type="submit" />
         </form>
     </div>  
+  </div>
+    <div id="playerinfo">
+    
+    </div>
     <div id="characters-container">
 
     </div>
 
 </div>
 
-<script src="src/components/characters.js"></script>
-<script src="src/components/app.js"></script>
-<script src="src/adapters/CharactersAdapter.js"></script>
+<script src="components/players.js"></script>
+<script src="components/characters.js"></script>
+<script src="components/app.js"></script>
+<script src="adapters/PlayersAdapter.js"></script>
+<script src="adapters/CharactersAdapter.js"></script>
 <script src="src/index.js"></script>
 <!--     <form class="charstart">
         <header>

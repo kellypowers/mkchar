@@ -10,7 +10,7 @@ class Characters {
         this.adapter.getCharacters().then(characters => {
             // return console.log(Characters)
             // get Characters from server, then push them onto this.Characters so when call render
-            characters.forEach(character => this.Characters.push(character))
+            characters.forEach(character => this.characters.push(character))
         })
         .then(() => {
             this.render()

@@ -1,15 +1,19 @@
-// adapters alk to backend
+// adapters talk to backend
 
 class CharactersAdapter {
     constructor(){
-        this.baseUrl = "http://localhost:3000/api/v1/characters"
+        this.baseUrl = "http://localhost:3000/api/v1/players"
     }
+    getPlayerId() {
 
-    getNotes() {
-        return fetch(this.baseUrl).then(res => res.json()
+    }
+    getCharacters() {
+        let playerId = this.getPlayerId()
+        return fetch(`this.baseUrl/${playerId}/characters`).then(res => res.json()
         )
     }
 }
+// will make available these:
 
 // adapter = new CharactersAdapter()
 
