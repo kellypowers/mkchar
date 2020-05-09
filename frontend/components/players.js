@@ -3,7 +3,7 @@ class Players {
         // this.players = []
         this.adapter = new PlayersAdapter()
         // this.bindEventListeners()
-        this.fetchAndLoadPlayers()
+        // this.fetchAndLoadPlayers()
         this.hideModal()
     }
 

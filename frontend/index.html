@@ -7,13 +7,17 @@
     <title>mkchar: make your new D&D character</title>
 </head>
 <body>
+  <div id="playerinfo">
+    
+  </div>
 <div id="playername">
-  <form>
+  <!-- <form> -->
     <label>Enter or select your name:</label> <br>
     <ul id="list-player-names">
 
     </ul>
-    <input type="text"> 
+    <form id="form-new-playername">
+    <input type="text" id="input-new-playername" value=""> 
     <button type="submit" id="playername-submit">Enter</button>
   </form>
 </div>
@@ -22,9 +26,12 @@
     <h1>character App</h1>
     <div class="new-character-container">
         <form id="new-character-form" class="hidden">
+          <label for="name">Pick a Name </label>
+          <input type="text" id="new-char-name" />
+
           <label for="class">Choose a Class:</label>
 
-          <select id="class">
+          <select id="new-char-class">
             <option value="Dwarf">Dwarf</option>
             <option value="Elf">Elf</option>
             <option value="Halfling">Halfling</option>
@@ -37,7 +44,7 @@
           </select>
 
           <label for="race">Choose a race:</label>
-          <select id="class">
+          <select id="new-char-race">
             <option value="Barbarian">Barbarian</option>
             <option value="Bard">Bard</option>
             <option value="Cleric">Cleric</option>
@@ -52,13 +59,13 @@
             <option value="Wizard">Wizard</option>
         </select>
 
-            <input type="submit" />
+            <input id="newchar-submit" type="submit" />
         </form>
     </div>  
   </div>
-    <div id="playerinfo">
+    <!-- <div id="playerinfo">
     
-    </div>
+    </div> -->
     <div id="characters-container">
 
     </div>
@@ -67,6 +74,7 @@
 
 <script src="components/players.js"></script>
 <script src="components/characters.js"></script>
+<script src="components/character.js"></script>
 <script src="components/app.js"></script>
 <script src="adapters/PlayersAdapter.js"></script>
 <script src="adapters/CharactersAdapter.js"></script>
