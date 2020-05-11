@@ -17,6 +17,7 @@ class UniversalCharacter {
     return arr1.reduce((total, element) => {return total + element}, 0)
   }
   // calculate ability modifier
+  // why is this not avail on an instance of a character?  char.modifier(10) method not defined
   modifier(value) {
     return Math.floor((value - 10) / 2)
   }
@@ -30,6 +31,7 @@ class Race extends UniversalCharacter {
   }
 
   selectRaceModifiers(){
+    console.log('in race modifier ' + this.race);
     switch (this.race) {
       case 'Dwarf':
         this.constitution += 2;
@@ -90,52 +92,52 @@ class CharClass extends Race {
     // }
     switch (this.charClass) {
       case 'Barbarian':
-        this.hitDice = "1d12"
-        this.hp = 12 + this.modifier(this.constitution)
+        this.hitDice = "1d12";
+        this.hp = 12 + this.modifier(this.constitution);
         break;
       case 'Bard':
-        this.hitDice = "1d8"
-        this.hp = 8 + this.modifier(this.constitution)
+        this.hitDice = "1d8";
+        this.hp = 8 + this.modifier(this.constitution);
         break;
       case 'Cleric':
-        this.hitDice = "1d8"
-        this.hp = 8 + this.modifier(this.constitution)
+        this.hitDice = "1d8";
+        this.hp = 8 + this.modifier(this.constitution);
         break;
       case 'Druid':
-        this.hitDice = "1d8"
-        this.hp = 8 + this.modifier(this.constitution)
+        this.hitDice = "1d8";
+        this.hp = 8 + this.modifier(this.constitution);
         break;
       case 'Fighter':
-        this.hitDice = "1d10"
-        this.hp = 10 + this.modifier(this.constitution)
+        this.hitDice = "1d10";
+        this.hp = 10 + this.modifier(this.constitution);
         break;
       case 'Monk':
-        this.hitDice = "1d8"
-        this.hp = 8 + this.modifier(this.constitution)
+        this.hitDice = "1d8";
+        this.hp = 8 + this.modifier(this.constitution);
         break;
       case 'Paladin':
-        this.hitDice = "1d10"
-        this.hp = 10 + this.modifier(this.constitution)
+        this.hitDice = "1d10";
+        this.hp = 10 + this.modifier(this.constitution);
         break;
       case 'Ranger':
-        this.hitDice = "1d10"
-        this.hp = 10 + this.modifier(this.constitution)
+        this.hitDice = "1d10";
+        this.hp = 10 + this.modifier(this.constitution);
         break;
       case 'Rogue':
-        this.hitDice = "1d8"
-        this.hp = 8 + this.modifier(this.constitution)
+        this.hitDice = "1d8";
+        this.hp = 8 + this.modifier(this.constitution);
         break;
       case 'Sorcerer':
-        this.hitDice = "1d6"
-        this.hp = 6 + this.modifier(this.constitution)
+        this.hitDice = "1d6";
+        this.hp = 6 + this.modifier(this.constitution);
         break;
       case 'Warlock':
-        this.hitDice = "1d8"
-        this.hp = 8 + this.modifier(this.constitution)
+        this.hitDice = "1d8";
+        this.hp = 8 + this.modifier(this.constitution);
         break;
       case 'Wizard':
-        this.hitDice = "1d6"
-        this.hp = 6 + this.modifier(this.constitution)
+        this.hitDice = "1d6";
+        this.hp = 6 + this.modifier(this.constitution);
         break;
     }
   }
@@ -148,3 +150,26 @@ class Character extends CharClass {
     this.name = name
   }
 }
+
+// class CharClass {
+//   constructor() {}
+//   getModifier() {}
+// }
+
+// class Barbarian extends CharClass {
+//   constructor() {}
+//   getModifier() {
+//     return '1d2';
+//   }
+// }
+
+// const barbarian = new Barbarian();
+
+// class Character {
+//   constructor(name, race, class) {
+//   }
+// }
+
+// race class, dif races extend that, class, all classes extend that, char class, char class constructor race and class.
+// typescript
+// has a relationship, is a relationship

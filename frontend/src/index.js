@@ -3,10 +3,13 @@ const modal = document.querySelector('#modal')
 const playerSelect = document.getElementById('playername');
 const charContainer = document.getElementById('characters-container');
 const playerInfo = document.getElementById('playerinfo');
+const charSheet = document.getElementById('charsheet');
 // const input = document.querySelector('#input-new-playername').value;
 let baseUrl = "http://localhost:3000/api/v1/players"
 
- modal.hidden = true
+charSheet.hidden = true;
+ modal.hidden = true;
+ 
 
 // show all players 
 fetchAndLoadPlayers();
@@ -14,7 +17,7 @@ fetchAndLoadPlayers();
 // function hideModal(){
 //     modal.hidden = true
 // }
-
+// UNHIDE NEW CHAR SELECT OPTIONS
 function unhideModal(){
     // charContainer.removeChild(charContainer.querySelector('div'));
     // charContainer.removeChild(charContainer.querySelector('ul'));
@@ -24,13 +27,16 @@ function unhideModal(){
     // playerSelect.hidden = true;
     modal.hidden = false;
 }
-function unhidePlayer(){
-    charContainer.removeChild(charContainer.querySelector('div'));
+
+// for change player button, hides the current selected player and unhides the list of players
+function unhidePlayer(e){
+    // charContainer.removeChild(querySelector('div'));
     // charContainer.removeChild(charContainer.querySelector('ul'));
     // let changePlayerButton = document.querySelector('#change-player-button');
     // document.remove(changePlayerButton);
 
     playerSelect.hidden = false;
+    e.target.parentElement.hidden = true;
     // modal.hidden = false;
 }
 
@@ -66,10 +72,15 @@ function render(data) {
     let li = document.createElement('li');
     li.id = `${data.id}`
     li.innerHTML = `${data.player_name}`;
+    // let playerDeleteButton = document.createElement('button');
+    // playerDeleteButton.id = ``
+    // playerDeleteButton.addEventListener("click", deletePlayer);
     li.addEventListener("click", renderPlayerInfo );
     document.querySelector('#input-new-playername').value = "";
     listPlayers.appendChild(li);
 }
+
+
 
 // setPlayer(e){
 //     this.adapter.getOldPlayer(e)
@@ -86,6 +97,7 @@ function getOldPlayer(e){
 // click player name, remove the old players add change player button, show all charactes for that player
 function renderPlayerInfo(players) {
     playerSelect.hidden = true;
+    playerInfo.hidden = false;
     getOldPlayer(players).then(obj => {
         console.log(obj);
     // removeRenderedPlayers();
@@ -98,6 +110,12 @@ function renderPlayerInfo(players) {
     newCharButton.addEventListener("click", unhideModal)
 
     eachPlayerDiv.id = `player-${obj.id}`
+
+    let playerDeleteButton = document.createElement('button');
+    playerDeleteButton.innerText = "Delete Player"
+    playerDeleteButton.addEventListener("click", deletePlayer);
+    eachPlayerDiv.appendChild(playerDeleteButton);
+
     playerHeading.innerHTML = `${obj.player_name}'s characters`;
     // let eachCharDiv = document.createElement('div');
     let charList = document.createElement('ul');
@@ -110,6 +128,7 @@ function renderPlayerInfo(players) {
         charItem.id = `character-${character.id}`;
         charItem.addEventListener("click", showCharacter);
         eachCharDiv.appendChild(charItem);
+
         charList.appendChild(eachCharDiv);
         // add event listener to click to view, in view add buttons to edit and to delete
         // add delete button and edit button
@@ -171,6 +190,34 @@ function showCharacter(e){
 function renderCharacter(obj) {
     console.log(obj)
 }
+
+function deletePlayer(e) {
+    let playerid = e.target.parentElement.id.split('-')[1]
+    console.log(`id is ${playerid}`);
+    fetch(`http://localhost:3000/api/v1/players/${playerid}`, {
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        },
+        method: "DELETE",
+        body: JSON.stringify({
+            playerID: `${playerid}`,
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+        playerSelect.hidden=false;
+        playerInfo.hidden = true;
+        let deletedListItm = document.getElementById(`${data.playerId}`);
+        deletedListItm.remove();
+
+        // data.forEach(player => render(player))
+        })
+        // getPlayers().then(players => {
+        //     // console.log(players);
+        //     players.forEach(player => render(player))
+}
     // gotta get the view down for this
 //     {id: 1, name: "Delphinus", charClass: "Paladin", race: "Elf", intellect: null, …}
 // id: 1
@@ -210,7 +257,7 @@ function createNewPlayer(){
 
 function getNewPlayer(e){
     const input = document.querySelector('#input-new-playername').value;
-    console.log(`gfgdf is ${input}`);
+    // console.log(`gfgdf is ${input}`);
     e.preventDefault();
     fetch("http://localhost:3000/api/v1/players", {
     headers: {
@@ -230,8 +277,7 @@ function getNewPlayer(e){
 createNewPlayer();
 
 
-const newCharSubmit = document.querySelector('#newchar-submit');
-newCharSubmit.addEventListener("click", createChar)
+
 
 // function createChar(e){
 //     let playerid = document.querySelector('#playerinfo').querySelector('div').id.split('-')[1];
@@ -253,16 +299,21 @@ newCharSubmit.addEventListener("click", createChar)
 // .then(data => render(data))
 
 // }
+function newChar(){
+    const newCharSubmit = document.querySelector('#newchar-submit');
+    newCharSubmit.addEventListener("click", createChar)
+}
 
 function createChar(e) {
+    
     const charClassInput = document.querySelector('#new-char-class').value;
     console.log(`char class c ${charClassInput}`);
     const raceInput = document.querySelector('#new-char-race').value;
     const nameInput = document.querySelector('#new-char-name').value;
     let charNew = new Character(`${nameInput}`, `${raceInput}`, `${charClassInput}`);
-    console.log(`${charNew}`);
+    // console.log(`${charNew}`);
     let playerid = document.querySelector('#playerinfo').querySelector('div').id.split('-')[1];
-    console.log(`gfgdf is ${input}`);
+    console.log(`newchar is ${charNew}`);
     e.preventDefault();
     fetch(`http://localhost:3000/api/v1/players/${playerid}/characters`, {
     headers: {
@@ -278,7 +329,7 @@ function createChar(e) {
         intellect: `${charNew.intellect}`,
         wisdom: `${charNew.wisdom}`,
         charisma: `${charNew.charisma}`,
-        dexterity: `${charNew.name}`,
+        dexterity: `${charNew.dexterity}`,
         constitution: `${charNew.constitution}`,
         strength: `${charNew.strength}`,
         free_ability_pts: `${charNew.free_ability_pts}`,
@@ -289,5 +340,65 @@ function createChar(e) {
     })
 })
 .then(response => response.json())
-.then(data => console.log(data))
+.then(data => renderCharacter(data))
+}
+// WHERE IS HIT DICE, WHY IS HP ZERO, hlad elf shoul have +5 speed , my case statement sarent working
+// id: 8
+// name: "new"
+// charClass: "Half-Elf"
+// race: "Cleric"
+// intellect: 11
+// wisdom: 4
+// charisma: 12
+// strength: 10
+// constitution: 6
+// dexterity: 0  WHY IS THIS ZERO
+// speed: 25
+// hp: 0  WHY IS THIS ZERO
+// attacks_and_spells: null
+// languages_and_proficiencies: null
+// equipment: null
+// features_and_traits: null
+// background: null
+// xp: null
+// armor_class: null
+// initiative: null
+// personality_traits: null
+// ideals: null
+// bonds: null
+// flaws: null
+// player_id: 1
+// created_at: "2020-05-09T23:18:22.602Z"
+// updated_at: "2020-05-09T23:18:22.602Z"
+// __proto__: Object
+// {
+newChar();
+
+function renderCharacter(char){
+    charSheet.hidden = false;
+    let playername = document.querySelector('#playerinfo').querySelector('div').querySelector('h2').innerHTML.split(' ')[0].slice(0, -2);
+    document.querySelector('#charNameForm').value = char.name;
+    document.querySelector('#playerNameForm').value = `${playername}`;  
+    document.querySelector('#charFormRace').value = char.race;
+    // document.querySelector('#alignment').value = ;
+    // document.querySelector('#experiencepoints').value = ;
+    document.querySelector('#Strengthscore').value = char.strength;
+    document.querySelector('#Strengthmod').value = char.modifier(char.strength);
+    document.querySelector('#Dexterityscore').value = char.dexterity;
+
+    document.querySelector('#Constitutionscore').value = char.constitution;
+
+    document.querySelector('#Wisdomscore').value = char.wisdom;
+
+    document.querySelector('#Intelligencescore').value = char.intellect;
+
+    document.querySelector('#Charismascore').value = char.charisma;
+
+    // document.querySelector('#inspiration').value = ;
+
+    // document.querySelector('#proficiencybonus').value = ;
+    // document.querySelector('#Strength-save').value = ;
+
+
+
 }
