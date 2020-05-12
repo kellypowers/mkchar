@@ -296,7 +296,7 @@ function renderCharacter(obj){
             <div class="label-container">
               <label for="proficiencybonus">Proficiency Bonus</label>
             </div>
-            <input name="proficiencybonus" value="+2"  />
+            <input id="proficiencybonus" name="proficiencybonus" value="+2"  />
           </div>
           <div class="saves list-section box">
             <ul>
@@ -390,7 +390,7 @@ function renderCharacter(obj){
         <div class="label-container">
           <label for="passiveperception">Passive Wisdom (Perception)</label>
         </div>
-        <input name="passiveperception"  />
+        <input id="passiveperception" name="passiveperception"  />
       </div>
       <div class="otherprofs box textblock">
         <label for="otherprofs">Other Proficiencies and Languages</label><textarea id="proficiencies_and_languages" value=""  name="otherprofs"></textarea>
@@ -405,7 +405,7 @@ function renderCharacter(obj){
         </div>
         <div class="initiative">
           <div>
-            <label for="initiative">Initiative</label><input name="initiative"  value="" type="text" />
+            <label for="initiative">Initiative</label><input name="initiative" id="initiative" value="" type="text" />
           </div>
         </div>
         <div class="speed">
@@ -419,11 +419,11 @@ function renderCharacter(obj){
               <label for="maxhp">Hit Point Maximum</label><input id="hp" name="maxhp"   value="" type="text" />
             </div>
             <div class="current">
-              <label for="currenthp">Current Hit Points</label><input name="currenthp" value=""  type="text" />
+              <label for="currenthp">Current Hit Points</label><input id="currenthp" name="currenthp" value=""  type="text" />
             </div>
           </div>
           <div class="temporary">
-            <label for="temphp">Temporary Hit Points</label><input name="temphp"  value="" type="text" />
+            <label for="temphp">Temporary Hit Points</label><input name="temphp" id="temphp" value="" type="text" />
           </div>
         </div>
         <div class="hitdice">
