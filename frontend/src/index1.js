@@ -1,30 +1,113 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link rel="stylesheet" type="text/css" href="style.css"/> -->
-    <link rel="stylesheet" type="text/css" href="index.css"/>
-    <title>mkchar: make your new D&D character</title>
-</head>
-<body>
-  <main id="#main">
-  <div id="playerinfo">
-    
-  </div>
-<div id="playername">
-  <!-- <form> -->
-    <label>Enter or select your name:</label> <br>
-    <ul id="list-player-names">
+const main = document.querySelector("#main");
+// const modal = document.querySelector('#modal')
+// const playerSelect = document.getElementById('playername');
+// const charContainer = document.getElementById('characters-container');
+// const playerInfo = document.getElementById('playerinfo');
+// const charSheet = document.getElementById('charsheet');
+// const input = document.querySelector('#input-new-playername').value;
+let baseUrl = "http://localhost:3000/api/v1/players"
 
-    </ul>
-    <form id="form-new-playername">
-    <input type="text" id="input-new-playername" value=""> 
-    <button type="submit" id="playername-submit">Enter</button>
-  </form>
-</div>
-<div>
-  <div id="modal">
+// document.addEventListener("DOMContentLoaded", function(){
+//     renderPlayerDiv();
+//     getPlayers();
+// })
+
+renderPlayerDiv();
+
+
+function renderPlayerDiv(){
+    main.innerHTML = `  
+
+  <div id="playername">
+    <!-- <form> -->
+      <label>Enter or select your name:</label> <br>
+      <ul id="list-player-names">
+  
+      </ul>
+      <form id="form-new-playername">
+      <input type="text" id="input-new-playername" value=""> 
+      <button type="submit" id="playername-submit">Enter</button>
+    </form>
+  </div>`
+  getPlayers();
+}
+
+function getPlayers() {
+    return fetch(baseUrl).then(res => res.json()).then(players => {
+        // console.log(players);
+        players.forEach(player => render(player))
+    })
+}
+
+function render(data) {
+    const listPlayers = document.getElementById('list-player-names');
+    let li = document.createElement('li');
+    li.id = `${data.id}`
+    li.innerHTML = `${data.player_name}`;
+    li.addEventListener("click", renderPlayerInfo );
+    document.querySelector('#input-new-playername').value = "";
+    listPlayers.appendChild(li);
+}
+
+function renderPlayerInfo(players) {
+    main.innerHTML = `    <div id="playerinfo">
+    
+    </div>`
+    getOldPlayer(players).then(obj => {
+        console.log(obj);
+        const playerInfo = document.getElementById('playerinfo');
+    let playerHeading = document.createElement('h2');
+    let eachPlayerDiv = document.createElement('div');
+    let newCharButton = document.createElement("button");
+    newCharButton.innerText = "Create New Character";
+    newCharButton.addEventListener("click", renderNewCharForm)
+
+    eachPlayerDiv.id = `player-${obj.id}`
+
+    let playerDeleteButton = document.createElement('button');
+    playerDeleteButton.innerText = "Delete Player"
+    playerDeleteButton.addEventListener("click", deletePlayer);
+    eachPlayerDiv.appendChild(playerDeleteButton);
+
+    playerHeading.innerHTML = `${obj.player_name}'s characters`;
+    let charList = document.createElement('ul');
+    obj.characters.forEach (character => {
+        // console.log(`character is ${JSON.stringify(character)}`)
+        let eachCharDiv = document.createElement('div');
+        eachCharDiv.id = `char-${character.id}`;
+        let charItem = document.createElement('li');
+        charItem.innerHTML = `Character Name: ${character.name}, Race: ${character.race}, Class: ${character.charClass}`;
+        charItem.id = `character-${character.id}`;
+        charItem.addEventListener("click", showCharacter);
+        eachCharDiv.appendChild(charItem);
+
+        charList.appendChild(eachCharDiv);
+        // add event listener to click to view, in view add buttons to edit and to delete
+        // add delete button and edit button
+    });
+
+    changePlayerButton = document.createElement('button');
+    changePlayerButton.innerText = "Change Player";
+    changePlayerButton.id = "change-player-button";
+    changePlayerButton.addEventListener("click", renderPlayerDiv);
+    eachPlayerDiv.appendChild(changePlayerButton);
+
+    eachPlayerDiv.appendChild(newCharButton);
+    eachPlayerDiv.appendChild(playerHeading);
+    eachPlayerDiv.appendChild(charList);
+    playerInfo.appendChild(eachPlayerDiv);
+    
+    })
+}
+
+function getOldPlayer(e){
+    return fetch(`http://localhost:3000/api/v1/players/${e.target.id}`)
+.then(response => response.json())
+}
+
+function renderNewCharForm(){
+    document.querySelector("#main").innerHTML =`
+<div id="new-char">
     <h1>character App</h1>
     <div class="new-character-container">
         <form id="new-character-form" class="hidden">
@@ -80,33 +163,68 @@
         </form>
     </div>  
   </div>
-    <!-- <div id="playerinfo">
+  <div id="characters-container">
+
+  </div>`
+}
+
+function deletePlayer(e) {
+    let playerid = e.target.parentElement.id.split('-')[1]
+    console.log(`id is ${playerid}`);
+    fetch(`http://localhost:3000/api/v1/players/${playerid}`, {
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        },
+        method: "DELETE",
+        body: JSON.stringify({
+            playerID: `${playerid}`,
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+        playerSelect.hidden=false;
+        playerInfo.hidden = true;
+        let deletedListItm = document.getElementById(`${data.playerId}`);
+        deletedListItm.remove();
+        })
+}
+
+function showCharacter(e){
     
-    </div> -->
-    <div id="characters-container">
+    // console.log(e);
+    let playerid = e.target.parentElement.parentElement.parentElement.id.split('-')[1]
+    let characterid = e.target.id.split('-')[1];
+    // console.log(`jfsajsdk id is ${(e.target.parentElement.parentElement.parentElement.id.split('-')[1])}`);
+    return fetch(`http://localhost:3000/api/v1/players/${playerid}/characters/${characterid}`)
+.then(response => response.json())
+.then(obj => {
+  console.log(`${JSON.stringify(obj)}`);
+    renderCharacter(obj)
+})}
 
-    </div>
-
-</div>
-<form id="charsheet" class="charsheet">
+function renderCharacter(obj){
+    document.querySelector("#main").innerHTML = `
+    <form id="charsheet" class="charsheet">
   <header>
     <!-- can i set the character then call is with character.name etc? or is it all done in js file? -->
     <section class="charname">
-      <label for="charname">Character Name</label><input id="charNameForm" name="charname" value="" />
+      <label for="charname">Character Name</label><input id="charNameForm" name="charname" value="${obj.name}" />
     </section>
     <section class="misc">
       <ul>
         <li>
-          <label for="classlevel">Class & Level</label><input id="charClassForm" name="classlevel" value="" />
+          <label for="classlevel">Class & Level</label><input id="charClassForm" name="classlevel" value="${obj.charClass}/1" />
         </li>
         <li>
-          <label for="background">Background</label><input id="charBackgroundForm" name="background" value="" />
+          <label for="background">Background</label><input id="charBackgroundForm" name="background" value="${obj.background}" />
         </li>
         <li>
-          <label for="playername">Player Name</label><input id="playerNameForm" name="playername" value="">
+          <label for="playername">Player Name</label><input id="playerNameForm" name="playername" value="${obj.player.player_name}">
         </li>
         <li>
-          <label for="race">Race</label><input name="race" id="charFormRace" value="" />
+          <label for="race">Race</label><input name="race" id="charFormRace" value="${obj.race}" />
         </li>
         <li>
           <label for="alignment">Alignment</label><input id="charAlignmentForm" name="alignment" value="" />
@@ -173,12 +291,7 @@
           </ul>
         </div>
         <div class="attr-applications">
-          <!-- <div class="inspiration box">
-            <div class="label-container">
-              <label for="inspiration">Inspiration</label>
-            </div>
-            <input name="inspiration" type="checkbox" />
-          </div> -->
+
           <div class="proficiencybonus box">
             <div class="label-container">
               <label for="proficiencybonus">Proficiency Bonus</label>
@@ -314,123 +427,26 @@
           </div>
         </div>
         <div class="hitdice">
-          <!-- <div>
-            <div class="total">
-              <label onclick="totalhd_clicked()" for="totalhd">Total</label><input name="totalhd" placeholder="2d10" type="text" />
-            </div>
-            <div class="remaining"> -->
+
               <label for="remaininghd">Hit Dice</label><input id="hitDice" name="remaininghd"  value="" type="text" />
             </div>
           </div>
         </div>
-        <!-- <div class="deathsaves">
-          <div>
-            <div class="label">
-              <label>Death Saves</label>
-            </div>
-            <div class="marks">
-              <div class="deathsuccesses">
-                <label>Successes</label>
-                <div class="bubbles">
-                  <input name="deathsuccess1" type="checkbox" />
-                  <input name="deathsuccess2" type="checkbox" />
-                  <input name="deathsuccess3" type="checkbox" />
-                </div>
-              </div>
-              <div class="deathfails">
-                <label>Failures</label>
-                <div class="bubbles">
-                  <input name="deathfail1" type="checkbox" />
-                  <input name="deathfail2" type="checkbox" />
-                  <input name="deathfail3" type="checkbox" />
-                </div>
-              </div>
-            </div>
-          </div> -->
+        
         </div>
       </section>
       <section class="attacksandspellcasting">
         <div>
           <label>Attacks & Spellcasting</label>
           <input type="textarea" value=""  id="attacks_and_spellcasting" >
-          <!-- <table>
-            <thead>
-              <tr>
-                <th>
-                  Name
-                </th>
-                <th>
-                  Atk Bonus
-                </th>
-                <th>
-                  Damage/Type
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>
-                  <input name="atkname1" type="text" />
-                </td>
-                <td>
-                  <input name="atkbonus1" type="text" />
-                </td>
-                <td>
-                  <input name="atkdamage1" type="text" />
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <input name="atkname2" type="text" />
-                </td>
-                <td>
-                  <input name="atkbonus2" type="text" />
-                </td>
-                <td>
-                  <input name="atkdamage2" type="text" />
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <input name="atkname3" type="text" />
-                </td>
-                <td>
-                  <input name="atkbonus3" type="text" />
-                </td>
-                <td>
-                  <input name="atkdamage3" type="text" />
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <textarea></textarea> -->
+          
         </div>
       </section>
       <section class="equipment">
         <div>
           <label>Equipment</label>
           <input type="textarea" value=""  id="equipment">
-          <!-- <div class="money">
-            <ul>
-              <li>
-                <label for="cp">cp</label><input name="cp" />
-              </li>
-              <li>
-                <label for="sp">sp</label><input name="sp" />
-              </li>
-              <li>
-                <label for="ep">ep</label><input name="ep" />
-              </li>
-              <li>
-                <label for="gp">gp</label><input name="gp" />
-              </li>
-              <li>
-                <label for="pp">pp</label><input name="pp" />
-              </li>
-            </ul>
-          </div>
-          <textarea placeholder="Equipment list here"></textarea>
-        </div> -->
+          
       </section>
     </section>
     <section>
@@ -456,20 +472,5 @@
     </section>
   </main>
 </form>
-
-
-</main>
-
-
-<script src="components/character.js"></script>
-<script src="components/players.js"></script>
-<script src="components/characters1.js"></script>
-<!-- <script src="components/characters.js"></script> -->
-<!-- <script src="components/character.js"></script> -->
-<script src="components/app.js"></script>
-<script src="adapters/PlayersAdapter.js"></script>
-<script src="adapters/CharactersAdapter.js"></script>
-<script src="src/index.js"></script>
-
-</body>
-</html>
+    `
+}

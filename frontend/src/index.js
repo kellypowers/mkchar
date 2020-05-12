@@ -255,7 +255,7 @@ function createChar(e) {
 newChar();
 
 function renderCharacter(char){
-    charSheet.hidden = false;
+
     let playername = document.querySelector('#playerinfo').querySelector('div').querySelector('h2').innerHTML.split(' ')[0].slice(0, -2);
     document.querySelector('#charNameForm').value = char.name;
     document.querySelector('#playerNameForm').value = `${playername}`;  //char.player.name? 
@@ -267,11 +267,11 @@ function renderCharacter(char){
     document.querySelector('#Strengthscore').value = char.strength;
     document.querySelector('#Strengthmod').value = Math.floor((char.strength - 10) / 2);
     document.querySelector('#Dexterityscore').value = char.dexterity;
-    document.querySelector('#Dexteritymod').value =  + Math.floor((char.dexterity - 10) / 2);
+    document.querySelector('#Dexteritymod').value =  Math.floor((char.dexterity - 10) / 2);
     document.querySelector('#Constitutionscore').value = char.constitution;
-    document.querySelector('#Constitutionmod').value =  + Math.floor((char.constitution - 10) / 2);
+    document.querySelector('#Constitutionmod').value =   Math.floor((char.constitution - 10) / 2);
     document.querySelector('#Wisdomscore').value = char.wisdom;
-    document.querySelector('#Wisdommod').value =  + Math.floor((char.wisdom - 10) / 2);
+    document.querySelector('#Wisdommod').value =  Math.floor((char.wisdom - 10) / 2);
     document.querySelector('#Intelligencescore').value = char.intellect;
     document.querySelector('#Intelligencemod').value =  Math.floor((char.intellect - 10) / 2);
     document.querySelector('#Charismascore').value = char.charisma;
@@ -298,7 +298,7 @@ function deleteCharacter(e){
         },
         method: "DELETE",
         body: JSON.stringify({
-            characterID: //`${e.target.parentElement.id}`,
+            characterID: "" //`${e.target.parentElement.id}`,
         })
     })
     .then(response => response.json())
@@ -311,40 +311,40 @@ function deleteCharacter(e){
         })
 }
 // this is also j ust a placeholder, does not work yet
-function updateCharacter(e){
-    let playerid = "";
-    let charid= "";
-    fetch(`http://localhost:3000/api/v1/players/${playerid}/characters/${charid}`, {
-        headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json"
-        },
-        method: "POST",
-        body: JSON.stringify({
-     name: document.querySelector('#charNameForm').value ;
-    race: document.querySelector('#charFormRace').value;
-    charClass: document.querySelector('#charClassForm').value; 
-    background: document.querySelector('#charBackgroundForm').value; 
-    alignment: document.querySelector('#charAlignmentForm').value ;
-    // xp: document.querySelector('#experiencepoints').value ;
-    // strength: document.querySelector('#Strengthscore').value ;
-    // document.querySelector('#Dexterityscore').value ;
-    // document.querySelector('#Constitutionscore').value ;
-    // document.querySelector('#Wisdomscore').value ;
-    // document.querySelector('#Intelligencescore').value ;
-    // document.querySelector('#Charismascore').value ;
-    // document.querySelector('#speed').value ;
-    hp: document.querySelector('#hp').value ;
-    proficiencies_and_languages: document.querySelector("#proficiencies_and_languages").value ;
-    flaws: document.querySelector('#flaws');
-    bonds: document.querySelector('#bonds');
-    ideals: document.querySelector('#ideals');
-    personality: document.querySelector('#personality');
-    features_and_traits: document.querySelector('#features_and_traits');
-    equipment: document.querySelector('#equipment');
-})
-    }
-}
+// function updateCharacter(e){
+//     let playerid = "";
+//     let charid= "";
+//     fetch(`http://localhost:3000/api/v1/players/${playerid}/characters/${charid}`, {
+//         headers: {
+//             "Content-Type": "application/json",
+//             "Accept": "application/json"
+//         },
+//         method: "POST",
+//         body: JSON.stringify({
+//      name: document.querySelector('#charNameForm').value,
+//     race: document.querySelector('#charFormRace').value,
+//     charClass: document.querySelector('#charClassForm').value, 
+//     background: document.querySelector('#charBackgroundForm').value,
+//     alignment: document.querySelector('#charAlignmentForm').value,
+//     // xp: document.querySelector('#experiencepoints').value ;
+//     // strength: document.querySelector('#Strengthscore').value ;
+//     // document.querySelector('#Dexterityscore').value ;
+//     // document.querySelector('#Constitutionscore').value ;
+//     // document.querySelector('#Wisdomscore').value ;
+//     // document.querySelector('#Intelligencescore').value ;
+//     // document.querySelector('#Charismascore').value ;
+//     // document.querySelector('#speed').value ;
+//     hp: document.querySelector('#hp').value ,
+//     proficiencies_and_languages: document.querySelector("#proficiencies_and_languages").value ,
+//     flaws: document.querySelector('#flaws'),
+//     bonds: document.querySelector('#bonds'),
+//     ideals: document.querySelector('#ideals'),
+//     personality: document.querySelector('#personalty'),
+//     features_and_traits: document.querySelector('#features_and_traits').
+//     equipment: document.querySelector('#equipment'),
+// })
+//     }
+// }
 
 
 function rollSixSidedDice() {

@@ -221,7 +221,7 @@ class Background extends CharClass {
         this.proficiencies = this.proficiencies.push("Athletics", "Perception");
         break;
       case 'Soldier':
-        this.proficiencies = this.proficiencies.push("Athletics", "Intimidation");
+        this.proficiencies.push("Athletics", "Intimidation");
         break;
       case 'Urchin':
         this.proficiencies = this.proficiencies.push("Sleight of Hand", "Stealth");
