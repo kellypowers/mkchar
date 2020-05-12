@@ -34,7 +34,7 @@ function renderPlayerDiv(){
 
 function getPlayers() {
     return fetch(baseUrl).then(res => res.json()).then(players => {
-        // console.log(players);
+         console.log(players);
         players.forEach(player => render(player))
     })
 }

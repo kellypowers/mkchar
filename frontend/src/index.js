@@ -278,7 +278,7 @@ function renderCharacter(char){
     document.querySelector('#Charismamod').value =  Math.floor((char.charisma - 10) / 2);
     document.querySelector('#speed').value = char.speed;
     document.querySelector('#hp').value = char.hp;
-    document.querySelector("#proficiencies_and_languages").value = char.language;
+    document.querySelector("#proficiencies_and_languages").value = char.languages_and_proficiencies;
     // document.querySelector('#inspiration').value = ;
 
     // document.querySelector('#proficiencybonus').value = ;
