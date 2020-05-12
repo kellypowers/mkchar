@@ -227,10 +227,10 @@ function renderCharacter(obj){
           <label for="race">Race</label><input name="race" id="charFormRace" value="${obj.race}" />
         </li>
         <li>
-          <label for="alignment">Alignment</label><input id="charAlignmentForm" name="alignment" value="" />
+          <label for="alignment">Alignment</label><input id="charAlignmentForm" name="alignment" value="${obj.alignment}" />
         </li>
         <li>
-          <label for="experiencepoints">Experience Points</label><input id="experiencepoints" name="experiencepoints" value="" />
+          <label for="experiencepoints">Experience Points</label><input id="experiencepoints" name="experiencepoints" value="${obj.xp}" />
         </li>
       </ul>
     </section>
@@ -242,50 +242,50 @@ function renderCharacter(obj){
           <ul>
             <li>
               <div class="score">
-                <label for="Strengthscore">Strength</label><input id="Strengthscore"  name="Strengthscore" value="" class="stat"/>
+                <label for="Strengthscore">Strength</label><input id="Strengthscore"  name="Strengthscore" value="${obj.strength}" class="stat"/>
               </div>
               <div class="modifier">
-                <input id="Strengthmod" name="Strengthmod" class="statmod"/>
+                <input id="Strengthmod" name="Strengthmod" value="${Math.floor((obj.strength - 10) / 2)}" class="statmod"/>
               </div>
             </li>
             <li>
               <div class="score">
-                <label for="Dexterityscore">Dexterity</label><input id="Dexterityscore" name="Dexterityscore" value="" class="stat"/>
+                <label for="Dexterityscore">Dexterity</label><input id="Dexterityscore" name="Dexterityscore" value="${obj.dexterity}" class="stat"/>
               </div>
               <div class="modifier">
-                <input name="Dexteritymod" id="Dexteritymod" value="" class=statmod/>
+                <input name="Dexteritymod" id="Dexteritymod" value="${Math.floor((obj.dexterity - 10) / 2)}" class=statmod/>
               </div>
             </li>
             <li>
               <div class="score">
-                <label for="Constitutionscore">Constitution</label><input id="Constitutionscore" name="Constitutionscore" value="" class="stat"/>
+                <label for="Constitutionscore">Constitution</label><input id="Constitutionscore" name="Constitutionscore" value="${obj.constitution}" class="stat"/>
               </div>
               <div class="modifier">
-                <input id="Constitutionmod" name="Constitutionmod" value="" class="statmod"/>
+                <input id="Constitutionmod" name="Constitutionmod" value="${Math.floor((obj.constitution - 10) / 2)}" class="statmod"/>
               </div>
             </li>
             <li>
               <div class="score">
-                <label for="Wisdomscore">Wisdom</label><input name="Wisdomscore" value=""  id="Wisdomscore" class="stat"/>
+                <label for="Wisdomscore">Wisdom</label><input name="Wisdomscore" value="${obj.wisdom}"  id="Wisdomscore" class="stat"/>
               </div>
               <div class="modifier">
-                <input id="Wisdommod" value=""  name="Wisdommod"  />
+                <input id="Wisdommod" value="${Math.floor((obj.wisdom - 10) / 2)}"  name="Wisdommod"  />
               </div>
             </li>
             <li>
               <div class="score">
-                <label for="Intelligencescore">Intelligence</label><input id="Intelligencescore" value=""  name="Intelligencescore"  class="stat"/>
+                <label for="Intelligencescore">Intelligence</label><input id="Intelligencescore" value="${obj.intellect}"  name="Intelligencescore"  class="stat"/>
               </div>
               <div class="modifier">
-                <input id="Intelligencemod" name="Intelligencemod"  value=""  class="statmod"/>
+                <input id="Intelligencemod" name="Intelligencemod"  value="${Math.floor((obj.intellect - 10) / 2)}"  class="statmod"/>
               </div>
             </li>
             <li>
               <div class="score">
-                <label for="Charismascore">Charisma</label><input id="Charismascore"  value="" name="Charismascore" class="stat"/>
+                <label for="Charismascore">Charisma</label><input id="Charismascore"  value="${obj.charisma}" name="Charismascore" class="stat"/>
               </div>
               <div class="modifier">
-                <input name="Charismamod" id="Charismamod" value=""  class="statmod"/>
+                <input name="Charismamod" id="Charismamod" value="${Math.floor((obj.charisma - 10) / 2)}"  class="statmod"/>
               </div>
             </li>
           </ul>
@@ -307,7 +307,7 @@ function renderCharacter(obj){
                 <label for="Dexterity-save">Dexterity</label><input  value="" id="dex-save" name="Dexterity-save" type="text" /><input id="str-save-check"  value="" name="Dexterity-save-prof" type="checkbox" />
               </li>
               <li>
-                <label for="Constitution-save">Constitution</label><input  value="" name="const-save" type="text" /><input id="const-save-check"  value="" name="Constitution-save-prof" type="checkbox" />
+                <label for="Constitution-save">Constitution</label><input id="const-save" value="" name="const-save" type="text" /><input id="const-save-check"  value="" name="Constitution-save-prof" type="checkbox" />
               </li>
               <li>
                 <label for="Wisdom-save">Wisdom</label><input id="wis-save" value=""  name="Wisdom-save" type="text" /><input name="Wisdom-save-prof"  value="" id="wis-save-check" type="checkbox" />
