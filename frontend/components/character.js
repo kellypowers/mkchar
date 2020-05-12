@@ -13,6 +13,16 @@ class UniversalCharacter {
     this.alignment= "";
     this.language= ["Common"];
     this.proficiencies = [];
+    // these are for editing for people who want to save this stuff to DB
+    this.personality_traits = "";
+    this.ideals = "";
+    this.bonds = "";
+    this.flaws = "";
+    this.features_and_traits = "";
+    this.equipment = "";
+    this.attacks_and_spells = "";
+    this.background = ""
+
   }
 // roll 4 six-sided dice, add the top 3 numbers.
   getAbilityScore(){
@@ -169,14 +179,123 @@ class CharClass extends Race {
   }
 }
 
+class Background extends CharClass {
+  constructor(race, charClass, background){
+    super(race, charClass);
+    this.background = background;
+    this.selectBackgroundModifiers();
+  }
 
-class Character extends CharClass {
-  constructor(name, race, charClass) {
-    super(race, charClass)
+  selectBackgroundModifiers(){
+    // console.log('in race modifier ' + this.hp);
+    switch (this.background) {
+      case 'Acolyte':
+        this.proficiencies = this.proficiencies.push("Insight", "Religion");
+        // console.log('hp under race class is' + this.hp);
+        break;
+      case 'Charlatan':
+        this.proficiencies = this.proficiencies.push("Deception", "Sleight of Hand");
+        break;
+      case 'Criminal':
+        this.proficiencies = this.proficiencies.push("Deception", "Stealth");
+        break;
+      case 'Entertainer':
+        this.proficiencies = this.proficiencies.push("Acrobatics", "Performance");
+        break;
+      case 'Guild Artisan':
+        this.proficiencies = this.proficiencies.push("Insight", "Persuasion");
+        break;
+      case 'Hermit':
+        this.proficiencies = this.proficiencies.push("Medicine", "Religion");
+        break;
+      case 'Noble':
+        this.proficiencies = this.proficiencies.push("History", "Persuasion");
+        break;
+      case 'Outlander':
+        this.proficiencies = this.proficiencies.push("Athletics", "Survival");
+        break;
+      case 'Sage':
+        this.proficiencies = this.proficiencies.push("Arcana", "History");
+        break;
+      case 'Sailor':
+        this.proficiencies = this.proficiencies.push("Athletics", "Perception");
+        break;
+      case 'Soldier':
+        this.proficiencies = this.proficiencies.push("Athletics", "Intimidation");
+        break;
+      case 'Urchin':
+        this.proficiencies = this.proficiencies.push("Sleight of Hand", "Stealth");
+        break;
+    }
+  }
+}
+
+class Character extends Background {
+  constructor(name, race, charClass, background) {
+    super(race, charClass, background)
     this.name = name
   }
 }
 
+
+// class Character extends CharClass {
+//   constructor(name, race, charClass) {
+//     super(race, charClass)
+//     this.name = name
+//   }
+// }
+
+
+
+
+// class Background {
+//   constructor(background){
+//     this.background = background;
+//   }
+
+//   selectBackgroundModifiers(){
+//     // console.log('in race modifier ' + this.hp);
+//     switch (this.background) {
+//       case 'Acolyte':
+//         this.proficiencies = this.proficiencies.push("Insight", "Religion");
+//         // console.log('hp under race class is' + this.hp);
+//         break;
+//       case 'Charlatan':
+//         this.proficiencies = this.proficiencies.push("Deception", "Sleight of Hand");
+//         break;
+//       case 'Criminal':
+//         this.proficiencies = this.proficiencies.push("Deception", "Stealth");
+//         break;
+//       case 'Entertainer':
+//         this.proficiencies = this.proficiencies.push("Acrobatics", "Performance");
+//         break;
+//       case 'Guild Artisan':
+//         this.proficiencies = this.proficiencies.push("Insight", "Persuasion");
+//         break;
+//       case 'Hermit':
+//         this.proficiencies = this.proficiencies.push("Medicine", "Religion");
+//         break;
+//       case 'Noble':
+//         this.proficiencies = this.proficiencies.push("History", "Persuasion");
+//         break;
+//       case 'Outlander':
+//         this.proficiencies = this.proficiencies.push("Athletics", "Survival");
+//         break;
+//       case 'Sage':
+//         this.proficiencies = this.proficiencies.push("Arcana", "History");
+//         break;
+//       case 'Sailor':
+//         this.proficiencies = this.proficiencies.push("Athletics", "Perception");
+//         break;
+//       case 'Soldier':
+//         this.proficiencies = this.proficiencies.push("Athletics", "Intimidation");
+//         break;
+//       case 'Urchin':
+//         this.proficiencies = this.proficiencies.push("Sleight of Hand", "Stealth");
+//         break;
+//     }
+//   }
+// }
 // class CharClass {
 //   constructor() {}
 //   getModifier() {}
