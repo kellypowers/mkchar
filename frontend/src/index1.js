@@ -410,25 +410,25 @@ function renderCharacter(obj){
         </div>
         <div class="speed">
           <div>
-            <label for="speed">Speed</label><input id="speed" name="speed" value=""   type="text" />
+            <label for="speed">Speed</label><input id="speed" name="speed" value="${obj.speed}"   type="text" />
           </div>
         </div>
         <div class="hp">
           <div class="regular">
             <div class="max">
-              <label for="maxhp">Hit Point Maximum</label><input id="hp" name="maxhp"   value="" type="text" />
+              <label for="maxhp">Hit Point Maximum</label><input id="hp" name="maxhp"   value="${obj.hp}" type="text" />
             </div>
             <div class="current">
-              <label for="currenthp">Current Hit Points</label><input id="currenthp" name="currenthp" value=""  type="text" />
+              <label for="currenthp">Current Hit Points</label><input id="currenthp" name="currenthp" value="${obj.hp}"  type="text" />
             </div>
           </div>
           <div class="temporary">
-            <label for="temphp">Temporary Hit Points</label><input name="temphp" id="temphp" value="" type="text" />
+            <label for="temphp">Temporary Hit Points</label><input name="temphp" id="temphp" value="${obj.temphp}" type="text" />
           </div>
         </div>
         <div class="hitdice">
 
-              <label for="remaininghd">Hit Dice</label><input id="hitDice" name="remaininghd"  value="" type="text" />
+              <label for="remaininghd">Hit Dice</label><input id="hitDice" name="remaininghd"  value="${obj.hitDice}" type="text" />
             </div>
           </div>
         </div>
@@ -438,35 +438,35 @@ function renderCharacter(obj){
       <section class="attacksandspellcasting">
         <div>
           <label>Attacks & Spellcasting</label>
-          <input type="textarea" value=""  id="attacks_and_spellcasting" >
+          <input type="textarea" value="${obj.attacks_and_spells}"  id="attacks_and_spellcasting" >
           
         </div>
       </section>
       <section class="equipment">
         <div>
           <label>Equipment</label>
-          <input type="textarea" value=""  id="equipment">
+          <input type="textarea" value="${obj.equipment}"  id="equipment">
           
       </section>
     </section>
     <section>
       <section class="flavor">
         <div class="personality">
-          <label for="personality">Personality</label><textarea id="personality"  value="" name="personality"></textarea>
+          <label for="personality">Personality</label><textarea id="personality"  value="${obj.personality_traits}" name="personality"></textarea>
         </div>
         <div class="ideals">
-          <label for="ideals">Ideals</label><textarea id="ideals" value=""  name="ideals"></textarea>
+          <label for="ideals">Ideals</label><textarea id="ideals" value="${obj.ideals}"  name="ideals"></textarea>
         </div>
         <div class="bonds">
-          <label for="bonds">Bonds</label><textarea id="bonds" value=""  name="bonds"></textarea>
+          <label for="bonds">Bonds</label><textarea id="bonds" value="${obj.bonds}"  name="bonds"></textarea>
         </div>
         <div class="flaws">
-          <label for="flaws">Flaws</label><textarea id="flaws" value=""  name="flaws"></textarea>
+          <label for="flaws">Flaws</label><textarea id="flaws" value="${obj.flaws}"  name="flaws"></textarea>
         </div>
       </section>
       <section class="features">
         <div>
-          <label for="features">Features & Traits</label><textarea id="features_and_traits"  value="" name="features"></textarea>
+          <label for="features">Features & Traits</label><textarea id="features_and_traits"  value="${obj.features_and_traits}" name="features"></textarea>
         </div>
       </section>
     </section>

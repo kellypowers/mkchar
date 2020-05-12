@@ -21,7 +21,8 @@ class UniversalCharacter {
     this.features_and_traits = "";
     this.equipment = "";
     this.attacks_and_spells = "";
-    this.background = ""
+    this.background = "";
+    this.saving_throws = []
 
   }
 // roll 4 six-sided dice, add the top 3 numbers.
@@ -129,51 +130,63 @@ class CharClass extends Race {
       case 'Barbarian':
         this.hitDice = "1d12";
         this.hp += Math.floor(Math.random()*12+1) + this.modifier(this.constitution);
+        this.saving_throws.push("Strength", "Constitution");
         // console.log(`hp under class is ${this.hp}`);
         break;
       case 'Bard':
         this.hitDice = "1d8";
         this.hp += Math.floor(Math.random()*8+1) + this.modifier(this.constitution);
+        this.saving_throws.push("Dexterity", "Charisma");
         break;
       case 'Cleric':
         this.hitDice = "1d8";
         this.hp += Math.floor(Math.random()*8+1) + this.modifier(this.constitution);
+        this.saving_throws.push("Wisdom", "Charisma");
         break;
       case 'Druid':
         this.hitDice = "1d8";
         this.hp += Math.floor(Math.random()*8+1) + this.modifier(this.constitution);
+        this.saving_throws.push("Intellect", "Wisdom");
         break;
       case 'Fighter':
         this.hitDice = "1d10";
         this.hp += Math.floor(Math.random()*10+1) + this.modifier(this.constitution);
+        this.saving_throws.push("Strength", "Constitution");
         break;
       case 'Monk':
         this.hitDice = "1d8";
         this.hp += Math.floor(Math.random()*8+1) + this.modifier(this.constitution);
+        this.saving_throws.push("Strength", "Dexterity");
         break;
       case 'Paladin':
         this.hitDice = "1d10";
         this.hp += Math.floor(Math.random()*10+1) + this.modifier(this.constitution);
+        this.saving_throws.push("Wisdom", "Charisma");
         break;
       case 'Ranger':
         this.hitDice = "1d10";
         this.hp += Math.floor(Math.random()*10+1) + this.modifier(this.constitution);
+        this.saving_throws.push("Strength", "Dexterity");
         break;
       case 'Rogue':
         this.hitDice = "1d8";
         this.hp += Math.floor(Math.random()*8+1) + this.modifier(this.constitution);
+        this.saving_throws.push("Dexterity", "Intellect");
         break;
       case 'Sorcerer':
         this.hitDice = "1d6";
         this.hp += Math.floor(Math.random()*6+1) + this.modifier(this.constitution);
+        this.saving_throws.push("Charisma", "Constitution");
         break;
       case 'Warlock':
         this.hitDice = "1d8";
         this.hp += Math.floor(Math.random()*8+1) + this.modifier(this.constitution);
+        this.saving_throws.push("Wisdom", "Charisma");
         break;
       case 'Wizard':
         this.hitDice = "1d6";
         this.hp += Math.floor(Math.random()*6+1) + this.modifier(this.constitution);
+        this.saving_throws.push("Intellect", "Wisdom");
         break;
     }
   }
@@ -190,41 +203,41 @@ class Background extends CharClass {
     // console.log('in race modifier ' + this.hp);
     switch (this.background) {
       case 'Acolyte':
-        this.proficiencies = this.proficiencies.push("Insight", "Religion");
+        this.proficiencies.push("Insight", "Religion");
         // console.log('hp under race class is' + this.hp);
         break;
       case 'Charlatan':
-        this.proficiencies = this.proficiencies.push("Deception", "Sleight of Hand");
+        this.proficiencies.push("Deception", "Sleight of Hand");
         break;
       case 'Criminal':
-        this.proficiencies = this.proficiencies.push("Deception", "Stealth");
+        this.proficiencies.push("Deception", "Stealth");
         break;
       case 'Entertainer':
-        this.proficiencies = this.proficiencies.push("Acrobatics", "Performance");
+        this.proficiencies.push("Acrobatics", "Performance");
         break;
       case 'Guild Artisan':
-        this.proficiencies = this.proficiencies.push("Insight", "Persuasion");
+        this.proficiencies.push("Insight", "Persuasion");
         break;
       case 'Hermit':
-        this.proficiencies = this.proficiencies.push("Medicine", "Religion");
+        this.proficiencies.push("Medicine", "Religion");
         break;
       case 'Noble':
-        this.proficiencies = this.proficiencies.push("History", "Persuasion");
+        this.proficiencies.push("History", "Persuasion");
         break;
       case 'Outlander':
-        this.proficiencies = this.proficiencies.push("Athletics", "Survival");
+        this.proficiencies.push("Athletics", "Survival");
         break;
       case 'Sage':
-        this.proficiencies = this.proficiencies.push("Arcana", "History");
+        this.proficiencies.push("Arcana", "History");
         break;
       case 'Sailor':
-        this.proficiencies = this.proficiencies.push("Athletics", "Perception");
+        this.proficiencies.push("Athletics", "Perception");
         break;
       case 'Soldier':
         this.proficiencies.push("Athletics", "Intimidation");
         break;
       case 'Urchin':
-        this.proficiencies = this.proficiencies.push("Sleight of Hand", "Stealth");
+        this.proficiencies.push("Sleight of Hand", "Stealth");
         break;
     }
   }
