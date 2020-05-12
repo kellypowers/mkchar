@@ -174,10 +174,9 @@ function renderPlayerInfo(players) {
 //     newPlayerButton.addEventListener("click", )
 // }
 
-
+// REMOVES CHAR MAKER MODAL, FETCHES CHAR INFO, FOR EVENT LISTENER TO SELECT A CHARACTER.
 function showCharacter(e){
-    // console.log(e.target.id);
-    // e.style = {color: red};
+    modal.hidden = true;
     console.log(e);
     let playerid = e.target.parentElement.parentElement.parentElement.id.split('-')[1]
     let characterid = e.target.id.split('-')[1];
@@ -190,7 +189,7 @@ function showCharacter(e){
 function renderCharacter(obj) {
     console.log(obj)
 }
-
+// DELETES PLAYER FOR EVENT LISTENER DELETEPLAYER BUTTON, REMOVES FROM LIST OF PLAYERS
 function deletePlayer(e) {
     let playerid = e.target.parentElement.id.split('-')[1]
     console.log(`id is ${playerid}`);
@@ -211,12 +210,7 @@ function deletePlayer(e) {
         playerInfo.hidden = true;
         let deletedListItm = document.getElementById(`${data.playerId}`);
         deletedListItm.remove();
-
-        // data.forEach(player => render(player))
         })
-        // getPlayers().then(players => {
-        //     // console.log(players);
-        //     players.forEach(player => render(player))
 }
     // gotta get the view down for this
 //     {id: 1, name: "Delphinus", charClass: "Paladin", race: "Elf", intellect: null, …}
@@ -255,9 +249,9 @@ function createNewPlayer(){
     newPlayerButton.addEventListener("click", getNewPlayer);
 }
 
+// EVENT LISTENER FOR ADDING NEW PLAYER, POSTS PLAYER NAME TO BACKEND, RENDERS LIST OF PLAYERS WITH NEW PLAYER ADDED.
 function getNewPlayer(e){
     const input = document.querySelector('#input-new-playername').value;
-    // console.log(`gfgdf is ${input}`);
     e.preventDefault();
     fetch("http://localhost:3000/api/v1/players", {
     headers: {
@@ -304,6 +298,7 @@ function newChar(){
     newCharSubmit.addEventListener("click", createChar)
 }
 
+// EVENT LSITENER CALLBACK TO CREATE A NEW CHARACTER WITH INPUT OF NAME, RACE, CLASS. CREATES NEW INSTANCE OF CHARACTER CLASS AND ASSIGNS ABILITY SCORES.
 function createChar(e) {
     
     const charClassInput = document.querySelector('#new-char-class').value;
@@ -402,3 +397,17 @@ function renderCharacter(char){
 
 
 }
+
+
+function rollSixSidedDice() {
+    Math.floor(Math.random()*6+1);
+  }
+//   what other dice are there  make functions
+  function rollSixSidedDice() {
+    Math.floor(Math.random()*6+1);
+  }
+
+//   Make function to apply free ability points.
+// make it so cannot edit ability scores unless have ability points to add.
+// learn how to bind !!!!!!
+// char show shows the character. click edit to edit the values that are editable.

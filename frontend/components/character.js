@@ -9,6 +9,10 @@ class UniversalCharacter {
     // half elf has 2 extra ability points to spend wherever you want... make this its own function
     this.free_ability_pts = 0
     this.speed = 25
+    this.hp = 0
+    this.alignment= "";
+    this.language= ["Common"];
+    this.proficiencies = [];
   }
 // roll 4 six-sided dice, add the top 3 numbers.
   getAbilityScore(){
@@ -31,19 +35,30 @@ class Race extends UniversalCharacter {
   }
 
   selectRaceModifiers(){
-    console.log('in race modifier ' + this.race);
+    // console.log('in race modifier ' + this.hp);
     switch (this.race) {
       case 'Dwarf':
         this.constitution += 2;
+        this.hp += 1;
+        this.alignment += "Lawful";
+        this.proficiencies = this.proficiencies.push("History");
+        // console.log('hp under race class is' + this.hp);
         break;
       case 'Elf':
         this.dexterity += 2;
         this.speed += 5;
+        this.language = this.language.push("Elvish");
+        this.alignment += "Chaotic G/E";
+        this.proficiencies = this.proficiencies.push("Perception");
         break;
       case 'Halfling':
+        this.language = this.language.push("Halfling");
+        this.alignment += "Lawful Good";
         this.dexterity += 2;
         break;
       case 'Human':
+        this.language = this.language.push("Any one other");
+        this.alignment += "any";
         this.dexterity += 1;
         this.wisdom += 1;
         this.intellect += 1;
@@ -53,24 +68,34 @@ class Race extends UniversalCharacter {
         this.speed += 5;
         break;
       case 'Dragonborn':
+        this.language = this.language.push("Draconic");
+        this.alignment = "Chaotic G/E";
         this.strength += 2;
         this.charisma += 1;
         this.speed += 5;
         break;
       case 'Gnome':
+        this.language = this.language.push("Gnomish");
+        this.alignment = "Neutral Good";
         this.intellect += 2;
         break;
       case 'Half-Elf':
+        this.language = this.language.push("Elvish", "one more");
+        this.proficiencies = this.proficiencies.push("any two");
         this.free_ability_pts += 2;
         this.charisma += 2;
         this.speed += 5;
         break;
       case 'Half-Orc':
+        this.language = this.language.push("Orcish");
+        this.proficiencies = this.proficiencies.push("Intimidation");
         this.strength += 1;
         this.constitution += 1;
         this.speed += 5;
         break;
       case 'Tiefling':
+        this.alignment += "Chaotic Evil";
+        this.language = this.language.push("Infernal");
         this.intellect += 1;
         this.charisma += 2;
         this.speed += 5;
@@ -93,51 +118,52 @@ class CharClass extends Race {
     switch (this.charClass) {
       case 'Barbarian':
         this.hitDice = "1d12";
-        this.hp = 12 + this.modifier(this.constitution);
+        this.hp += Math.floor(Math.random()*12+1) + this.modifier(this.constitution);
+        // console.log(`hp under class is ${this.hp}`);
         break;
       case 'Bard':
         this.hitDice = "1d8";
-        this.hp = 8 + this.modifier(this.constitution);
+        this.hp += Math.floor(Math.random()*8+1) + this.modifier(this.constitution);
         break;
       case 'Cleric':
         this.hitDice = "1d8";
-        this.hp = 8 + this.modifier(this.constitution);
+        this.hp += Math.floor(Math.random()*8+1) + this.modifier(this.constitution);
         break;
       case 'Druid':
         this.hitDice = "1d8";
-        this.hp = 8 + this.modifier(this.constitution);
+        this.hp += Math.floor(Math.random()*8+1) + this.modifier(this.constitution);
         break;
       case 'Fighter':
         this.hitDice = "1d10";
-        this.hp = 10 + this.modifier(this.constitution);
+        this.hp += Math.floor(Math.random()*10+1) + this.modifier(this.constitution);
         break;
       case 'Monk':
         this.hitDice = "1d8";
-        this.hp = 8 + this.modifier(this.constitution);
+        this.hp += Math.floor(Math.random()*8+1) + this.modifier(this.constitution);
         break;
       case 'Paladin':
         this.hitDice = "1d10";
-        this.hp = 10 + this.modifier(this.constitution);
+        this.hp += Math.floor(Math.random()*10+1) + this.modifier(this.constitution);
         break;
       case 'Ranger':
         this.hitDice = "1d10";
-        this.hp = 10 + this.modifier(this.constitution);
+        this.hp += Math.floor(Math.random()*10+1) + this.modifier(this.constitution);
         break;
       case 'Rogue':
         this.hitDice = "1d8";
-        this.hp = 8 + this.modifier(this.constitution);
+        this.hp += Math.floor(Math.random()*8+1) + this.modifier(this.constitution);
         break;
       case 'Sorcerer':
         this.hitDice = "1d6";
-        this.hp = 6 + this.modifier(this.constitution);
+        this.hp += Math.floor(Math.random()*6+1) + this.modifier(this.constitution);
         break;
       case 'Warlock':
         this.hitDice = "1d8";
-        this.hp = 8 + this.modifier(this.constitution);
+        this.hp += Math.floor(Math.random()*8+1) + this.modifier(this.constitution);
         break;
       case 'Wizard':
         this.hitDice = "1d6";
-        this.hp = 6 + this.modifier(this.constitution);
+        this.hp += Math.floor(Math.random()*6+1) + this.modifier(this.constitution);
         break;
     }
   }

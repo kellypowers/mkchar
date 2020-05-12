@@ -36,7 +36,7 @@ class Players {
         let li = document.createElement('li');
         li.id = `${data.id}`
         li.innerHTML = `${data.player_name}`;
-        li.addEventListener("click", this.renderPlayerInfo );
+        li.addEventListener("click", this.renderPlayerInfo.bind(this) );
 
         listPlayers.appendChild(li);
     }
