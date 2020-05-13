@@ -1,89 +1,78 @@
 
-class CharClass {
-  constructor() {
-      this.hitDice = "";
-    //   this.hp = 
+class CharClass extends Race {
+    constructor(race, charClass) {
+      super(race)
+      this.charClass = charClass
+      this.selectClassModifiers()
+    }
+    selectClassModifiers(){
+      // if(this.charClass == "Paladin") {
+      //   this.hitDice = "1d10"
+      //   this.hp = 10 + this.modifier(this.constitution)
+      // }
+      switch (this.charClass) {
+        case 'Barbarian':
+          this.hitDice = "1d12";
+          this.hp += Math.floor(Math.random()*12+1) + this.modifier(this.constitution);
+          this.saving_throws.push("Strength", "Constitution");
+          // console.log(`hp under class is ${this.hp}`);
+          break;
+        case 'Bard':
+          this.hitDice = "1d8";
+          this.hp += Math.floor(Math.random()*8+1) + this.modifier(this.constitution);
+          this.saving_throws.push("Dexterity", "Charisma");
+          break;
+        case 'Cleric':
+          this.hitDice = "1d8";
+          this.hp += Math.floor(Math.random()*8+1) + this.modifier(this.constitution);
+          this.saving_throws.push("Wisdom", "Charisma");
+          break;
+        case 'Druid':
+          this.hitDice = "1d8";
+          this.hp += Math.floor(Math.random()*8+1) + this.modifier(this.constitution);
+          this.saving_throws.push("Intellect", "Wisdom");
+          break;
+        case 'Fighter':
+          this.hitDice = "1d10";
+          this.hp += Math.floor(Math.random()*10+1) + this.modifier(this.constitution);
+          this.saving_throws.push("Strength", "Constitution");
+          break;
+        case 'Monk':
+          this.hitDice = "1d8";
+          this.hp += Math.floor(Math.random()*8+1) + this.modifier(this.constitution);
+          this.saving_throws.push("Strength", "Dexterity");
+          break;
+        case 'Paladin':
+          this.hitDice = "1d10";
+          this.hp += Math.floor(Math.random()*10+1) + this.modifier(this.constitution);
+          this.saving_throws.push("Wisdom", "Charisma");
+          break;
+        case 'Ranger':
+          this.hitDice = "1d10";
+          this.hp += Math.floor(Math.random()*10+1) + this.modifier(this.constitution);
+          this.saving_throws.push("Strength", "Dexterity");
+          break;
+        case 'Rogue':
+          this.hitDice = "1d8";
+          this.hp += Math.floor(Math.random()*8+1) + this.modifier(this.constitution);
+          this.saving_throws.push("Dexterity", "Intellect");
+          break;
+        case 'Sorcerer':
+          this.hitDice = "1d6";
+          this.hp += Math.floor(Math.random()*6+1) + this.modifier(this.constitution);
+          this.saving_throws.push("Charisma", "Constitution");
+          break;
+        case 'Warlock':
+          this.hitDice = "1d8";
+          this.hp += Math.floor(Math.random()*8+1) + this.modifier(this.constitution);
+          this.saving_throws.push("Wisdom", "Charisma");
+          break;
+        case 'Wizard':
+          this.hitDice = "1d6";
+          this.hp += Math.floor(Math.random()*6+1) + this.modifier(this.constitution);
+          this.saving_throws.push("Intellect", "Wisdom");
+          break;
+      }
+    }
   }
-  getModifier() {}
-}
-
-class Barbarian extends CharClass {
-  constructor() {}
-  getModifier() {
-    return '';
-}
-
-class Bard extends CharClass {
-    constructor() {}
-    getModifier() {
-        return '';
-    }
-}
-
-class Cleric extends CharClass {
-    constructor() {}
-    getModifier() {
-        return '';
-    }
-}
-
-class Druid extends CharClass {
-    constructor() {}
-    getModifier() {
-        return '';
-    }
-}
-class Fighter extends CharClass {
-    constructor() {}
-    getModifier() {
-        return '';
-    }
-}
-class Monk extends CharClass {
-    constructor() {}
-    getModifier() {
-        return '';
-    }
-}
-class Paladin extends CharClass {
-    constructor() {}
-    getModifier() {
-        return '1d2';
-    }
-}
-class Ranger extends CharClass {
-    constructor() {}
-    getModifier() {
-        return '1d2';
-    }
-}
-class Rogue extends CharClass {
-    constructor() {}
-    getModifier() {
-        return '';
-    }
-}
-class Sorcerer extends CharClass {
-    constructor() {}
-    getModifier() {
-        return '';
-    }
-}
-class Warlock extends CharClass {
-    constructor() {}
-    getModifier() {
-        return '';
-    }
-}
-class Wizard extends CharClass {
-    constructor() {}
-    getModifier() {
-        return '';
-    }
-}
-const barbarian = new Barbarian();
-
-class Character {
-  constructor(name, race, class) {
-  }
-}
+  

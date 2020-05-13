@@ -1,4 +1,4 @@
-let card = {
+const card = {
     name: document.querySelector("#charNameForm").value ,
     charClass: document.querySelector("#charClassForm").value  ,
     background: document.querySelector("#charBackgroundForm").value ,

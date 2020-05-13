@@ -30,6 +30,7 @@ function renderPlayerDiv(){
     </form>
   </div>`
   getPlayers();
+  newPlayerNameForm();
 }
 
 function getPlayers() {
@@ -49,10 +50,21 @@ function render(data) {
     listPlayers.appendChild(li);
 }
 
+function renderPlayerDropdown() {
+  fetch(baseUrl).then(res => res.json()).then(players => {
+   players.forEach(player =>  {
+  const playerDropdown = document.getElementById('new-char-player');
+  let option = document.createElement('option');
+  option.value = player;
+  option.innerHTML = player.player_name;
+  playerDropdown.appendChild(option); })
+})}
+
 function renderPlayerInfo(e) {
     main.innerHTML = `    <div id="playerinfo">
     
-    </div>`
+    </div>
+    <div id="new-char"></div>`
     getOldPlayer(e).then(playerData => {
       const player = new Player(playerData)
       const info = document.getElementById('playerinfo');
@@ -89,8 +101,7 @@ function getOldPlayer(e){
 }
 
 function renderNewCharForm(){
-    document.querySelector("#main").innerHTML =`
-<div id="new-char">
+    document.querySelector("#new-char").innerHTML =`
     <h1>character App</h1>
     <div class="new-character-container">
         <form id="new-character-form" class="hidden">
@@ -142,13 +153,44 @@ function renderNewCharForm(){
             <option value="Urchin">Urchin</option>
         </select>
 
+        <label for="player">Which player is using the character?:</label>
+          <select id="new-char-player">
+          ${renderPlayerDropdown()}
+        </select>
+
             <input id="newchar-submit" type="submit" />
         </form>
     </div>  
-  </div>
+
   <div id="characters-container">
 
   </div>`
+  newChar();
+}
+
+function newChar(){
+  console.log("in new char fun");
+  const newCharSubmit = document.querySelector('#newchar-submit');
+  newCharSubmit.addEventListener("click", createChar)
+}
+
+// EVENT LSITENER CALLBACK TO CREATE A NEW CHARACTER WITH INPUT OF NAME, RACE, CLASS. CREATES NEW INSTANCE OF CHARACTER CLASS AND ASSIGNS ABILITY SCORES.
+// did work, now  does not.
+function createChar(e) {
+  console.log("in createChar fun");
+  const charBackgroundInput = document.querySelector('#new-char-background').value;
+  const charClassInput = document.querySelector('#new-char-class').value;
+  console.log(`char class c ${charClassInput}`);
+  const playerInput = document.querySelector('#new-char-player').value;
+  const raceInput = document.querySelector('#new-char-race').value;
+  const nameInput = document.querySelector('#new-char-name').value;
+  let charNew = new Character(`${nameInput}`, `${raceInput}`, `${charClassInput}`, `${charBackgroundInput}`, `${playerInput}`);
+  // console.log(`${charNew}`);
+  // let playerid = document.querySelector('#playerinfo').querySelector('div').id.split('-')[1];
+  let playerid = playerInput.id
+  console.log(`playerid  is ${playerid}`);
+  e.preventDefault();
+  charNew.postChar();
 }
 
 function deletePlayer(e) {
@@ -174,3 +216,29 @@ function deletePlayer(e) {
         })
 }
 
+
+function newPlayerNameForm(){
+  let newPlayerButton = document.querySelector('#playername-submit');
+  newPlayerButton.addEventListener("click", getNewPlayer);
+}
+
+// EVENT LISTENER FOR ADDING NEW PLAYER, POSTS PLAYER NAME TO BACKEND, RENDERS LIST OF PLAYERS WITH NEW PLAYER ADDED.
+function getNewPlayer(e){
+  const input = document.querySelector('#input-new-playername').value;
+  e.preventDefault();
+  fetch("http://localhost:3000/api/v1/players", {
+  headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json"
+  },
+  method: "POST",
+  body: JSON.stringify({
+      player_name: `${input}`
+  })
+})
+.then(response => response.json())
+.then(data => {
+
+  render(data)
+})
+}

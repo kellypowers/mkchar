@@ -24,7 +24,7 @@ class Api::V1::CharactersController < ApplicationController
         player = Player.find_by(id: params[:playerID])
         puts "player is #{player}"
         # @character = Character.new(character_new_params)
-        @character = player.characters.build(character_update_params)
+        @character = player.characters.build(character_params)
         if @character.save 
             puts "character is #{@character}"
             render json: @character, status: 200
@@ -55,13 +55,13 @@ class Api::V1::CharactersController < ApplicationController
     #     # add the permit params once i know what they are, using body as placeholder
     #     params.require(:character).permit(:name, :charClass, :race, :intellect, :wisdom, :charisma, :strength, :constitution, :dexterity, :speed, :hp, :attacks_and_spells, :languages_and_proficiencies, :equipment, :features_and_traits, :background, :xp, :armor_class, :initiative, :personality_traits, :ideals, :bonds, :flaws)
     # end
-    def character_new_params 
+    # def character_new_params 
+    #     # add the permit params once i know what they are, using body as placeholder
+    #     params.require(:character).permit(:name, :charClass, :race)
+    # end
+    def character_params 
         # add the permit params once i know what they are, using body as placeholder
-        params.require(:character).permit(:name, :charClass, :race)
-    end
-    def character_update_params 
-        # add the permit params once i know what they are, using body as placeholder
-        params.require(:character).permit(:name, :charClass, :race, :intellect, :wisdom, :charisma, :strength, :constitution, :dexterity, :speed, :hp, :attacks_and_spells, :languages_and_proficiencies, :equipment, :features_and_traits, :background, :xp, :armor_class, :initiative, :personality_traits, :ideals, :bonds, :flaws)
+        params.require(:character).permit(:name, :charClass, :race, :intellect, :wisdom, :charisma, :strength, :constitution, :dexterity, :speed, :hp, :attacks_and_spells, :languages_and_proficiencies, :equipment, :features_and_traits, :background, :xp, :armor_class, :initiative, :personality_traits, :ideals, :bonds, :flaws, :alignment, :hitDice, :free_ability_pts)
     end
 
     def set_player!
