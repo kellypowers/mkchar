@@ -28,7 +28,7 @@ class Api::V1::PlayersController < ApplicationController
             if player.save 
                 render json: PlayerSerializer.new(player).to_serialized_json
             else
-                render plain: "Unable to create the player name. Please try another name."
+                render json: {message: "Unable to create the player name. Please try another name."}
                 # add error to show
             end
         end

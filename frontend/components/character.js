@@ -321,27 +321,30 @@ class Character extends Background {
 </form>
     `
     this.updateChar();
+    
 }
 
 updateChar(){
   let updateButton = document.querySelector('#update-char');
   updateButton.addEventListener("click", () => this.postCharUpdate.call(this))
+  return updateButton;
 }
 
 postCharUpdate(){
-  
+  // debugger
   // let playerid = document.querySelector('#main').querySelector('div').id.split('-')[1];
-  let playerid = this.player_id;
-  console.log(`player id is ${playerid}`);
-    
+  let playerid = this.player;
+  console.log(`player id is ${player}`);
+    debugger
     fetch(`http://localhost:3000/api/v1/players/${playerid}/characters/${this.id}`, {
     headers: {
         "Content-Type": "application/json",
         "Accept": "application/json"
-    },
-    method: "POST",
+    }, 
+    method: "PATCH",
     body: JSON.stringify(
       {
+        
         name: document.querySelector("#charNameForm").value ,
         charClass: document.querySelector("#charClassForm").value  ,
         background: document.querySelector("#charBackgroundForm").value ,
@@ -421,10 +424,10 @@ postCharUpdate(){
         flaws: document.querySelector("#flaws").value ,
         features_and_traits: document.querySelector("#features_and_traits").value 
     }
-  )
-
+  ) 
   .then(response => response.json())
   .then(data => {
+    
     console.log(data);
     this.showCharacter(data)
   })

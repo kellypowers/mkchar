@@ -209,9 +209,8 @@ function deletePlayer(e) {
     .then(response => response.json())
     .then(data => {
         console.log(data);
-        playerSelect.hidden=false;
-        playerInfo.hidden = true;
-        let deletedListItm = document.getElementById(`${data.playerId}`);
+        renderPlayerDiv();
+        let deletedListItm = document.getElementById(`${data.playerid}`);
         deletedListItm.remove();
         })
 }
