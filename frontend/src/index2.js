@@ -59,7 +59,17 @@ function getNewPlayer(e){
     })
 })
 .then(response => response.json())
-renderPlayerDiv();
+.then(data => {
+    renderPlayerDiv();
+    // const listPlayers = document.getElementById('list-player-names');
+    // let li = document.createElement('li');li.id = `${data.id}`
+    // li.innerHTML = `${data.player_name}`;
+    // li.addEventListener("click", renderPlayerInfo );
+    // document.querySelector('#input-new-playername').value = "";
+    // listPlayers.appendChild(li);
+})
+
+
 }
 
 
@@ -263,6 +273,7 @@ function deletePlayer(e) {
     })
     .then(response => response.json())
     .then(data => {
+        renderPlayerDiv();
         let deletedListItm = document.getElementById(`${data.playerId}`);
         deletedListItm.remove();
         })
@@ -654,7 +665,7 @@ function postCharUpdate(e){
           medicine: document.querySelector("#med").value ,
           medicine_check: document.querySelector("#med-check").value ,
           nature: document.querySelector("#nature").value ,
-          nature_check: document.querySelector("nature-check").value ,  
+        //   nature_check: document.querySelector("nature-check").value ,  
           perception: document.querySelector("#percept").value ,
           perception_check: document.querySelector("#percept-check").value ,
           performance: document.querySelector("#perform").value ,
