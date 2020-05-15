@@ -63,11 +63,11 @@ renderPlayerDiv();
 }
 
 
-function renderPlayerInfo(players) {
+function renderPlayerInfo(e) {
     main.innerHTML = `    <div id="playerinfo">
     
     </div> <div id="characterform"></div>`
-    getOldPlayer(players).then(obj => {
+    getOldPlayer(e).then(obj => {
         console.log(obj);
         const playerInfo = document.getElementById('playerinfo');
     let playerHeading = document.createElement('h2');
@@ -231,7 +231,17 @@ function createChar(e) {
 .then(data => renderCharacter(data))
 .then(data => {
     console.log(data);
-    renderCharacter(data)
+    let list = document.querySelector('ul');
+    let eachCharDiv = document.createElement('div');
+    eachCharDiv.id = `char-${data.id}`;
+    let charItem = document.createElement('li');
+    charItem.innerHTML = `Character Name: ${data.name}, Race: ${data.race}, Class: ${data.charClass}`;
+    charItem.id = `character-${character.id}`;
+    charItem.addEventListener("click", showCharacter);
+    eachCharDiv.appendChild(charItem);
+    list.appendChild(eachCharDiv)
+
+    renderCharacter(data);
 })
 }
 
@@ -253,7 +263,6 @@ function deletePlayer(e) {
     })
     .then(response => response.json())
     .then(data => {
-        renderPlayerDiv();
         let deletedListItm = document.getElementById(`${data.playerId}`);
         deletedListItm.remove();
         })
@@ -544,9 +553,42 @@ function renderCharacter(obj){
   <input type="submit" value="Update Character" id="update-char">
   
 </form>
+<input id="delete-char" value="Delete Character" type="submit">
     `
     updateChar();
+    deleteChar();
 }
+
+function deleteChar() {
+    let deleteCharButton = document.querySelector('#delete-char');
+    deleteCharButton.addEventListener("click", deleteCharacter)
+}
+
+function deleteCharacter(e){
+    e.preventDefault();
+    let playerid = document.querySelector('#main').querySelector('div').querySelector('div').id.split('-')[1]
+    let characterid = document.querySelector('form').id.split('-')[1];
+    return fetch(`http://localhost:3000/api/v1/players/${playerid}/characters/${characterid}`, {
+      headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+      }, 
+      method: "DELETE",
+      body: JSON.stringify({
+          characterID: `${characterid}`,
+    })
+})
+.then(response => response.json())
+.then(data => {
+    console.log(data);
+    document.getElementById(`char-${data.characterId}`).remove();
+    document.querySelector('form').remove();
+    document.querySelector('#delete-char').remove();
+    })
+}
+
+
+
 
 function updateChar(){
     let updateButton = document.querySelector('#update-char');

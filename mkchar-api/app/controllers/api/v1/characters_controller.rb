@@ -47,10 +47,10 @@ class Api::V1::CharactersController < ApplicationController
 
     def destroy
         puts "params are #{params}"
-        @character = Character.find(params[:id])
-        @character.delete
+        character = Character.find(params[:id])
+        character.delete
 
-        render json: {characterId: @character.id}
+        render json: {characterId: character.id}
     end
 
     private
