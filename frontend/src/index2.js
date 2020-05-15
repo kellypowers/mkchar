@@ -61,12 +61,7 @@ function getNewPlayer(e){
 .then(response => response.json())
 .then(data => {
     renderPlayerDiv();
-    // const listPlayers = document.getElementById('list-player-names');
-    // let li = document.createElement('li');li.id = `${data.id}`
-    // li.innerHTML = `${data.player_name}`;
-    // li.addEventListener("click", renderPlayerInfo );
-    // document.querySelector('#input-new-playername').value = "";
-    // listPlayers.appendChild(li);
+
 })
 
 
