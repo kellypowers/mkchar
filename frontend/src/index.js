@@ -188,8 +188,8 @@ function newChar(){
 
 // EVENT LSITENER CALLBACK TO CREATE A NEW CHARACTER WITH INPUT OF NAME, RACE, CLASS. CREATES NEW INSTANCE OF CHARACTER CLASS AND ASSIGNS ABILITY SCORES.
 // instantiate char class
-function createChar(e) {
-
+  function createChar(e) {
+    e.preventDefault();
     console.log("in createChar fun");
     const charBackgroundInput = document.querySelector('#new-char-background').value;
     const charClassInput = document.querySelector('#new-char-class').value;
@@ -201,7 +201,6 @@ function createChar(e) {
     // console.log(`${charNew}`);
     let playerid = document.querySelector('#playerinfo').querySelector('div').id.split('-')[1];
     console.log(`newchar is ${charNew}`);
-    e.preventDefault();
     fetch(`http://localhost:3000/api/v1/players/${playerid}/characters`, {
     headers: {
         "Content-Type": "application/json",
@@ -233,7 +232,6 @@ function createChar(e) {
     })
 })
 .then(response => response.json())
-.then(data => renderCharacter(data))
 .then(data => {
     console.log(data);
     let list = document.querySelector('ul');
@@ -241,7 +239,7 @@ function createChar(e) {
     eachCharDiv.id = `char-${data.id}`;
     let charItem = document.createElement('li');
     charItem.innerHTML = `Character Name: ${data.name}, Race: ${data.race}, Class: ${data.charClass}`;
-    charItem.id = `character-${character.id}`;
+    charItem.id = `character-${data.id}`;
     charItem.addEventListener("click", showCharacter);
     eachCharDiv.appendChild(charItem);
     list.appendChild(eachCharDiv)
@@ -386,22 +384,22 @@ function renderCharacter(obj){
           <div class="saves list-section box">
             <ul>
               <li>
-                <label for="Strength-save">Strength</label><input  value="" id="str-save" name="Strength-save" type="text" /><input id="str-save-prof"  value="" name="Strength-save-prof" type="checkbox" />
+                <label for="Strength-save">Strength</label><input  value="${obj.strength_save}" id="str-save" name="Strength-save" type="text" /><input id="str-save-prof"  ${obj.strength_save_check ? "checked" : ""} name="Strength-save-prof" type="checkbox" />
               </li>
               <li>
-                <label for="Dexterity-save">Dexterity</label><input  value="" id="dex-save" name="Dexterity-save" type="text" /><input id="str-save-check"  value="" name="Dexterity-save-prof" type="checkbox" />
+                <label for="Dexterity-save">Dexterity</label><input  value="${obj.dex_save}" id="dex-save" name="Dexterity-save" type="text" /><input id="dex-save-check"  ${obj.dex_save_check ? "checked" : ""} name="Dexterity-save-prof" type="checkbox" />
               </li>
               <li>
-                <label for="Constitution-save">Constitution</label><input id="const-save" value="" name="const-save" type="text" /><input id="const-save-check"  value="" name="Constitution-save-prof" type="checkbox" />
+                <label for="Constitution-save">Constitution</label><input id="const-save" value="${obj.const_save}" name="const-save" type="text" /><input id="const-save-check"  ${obj.const_save_check ? "checked" : ""}" name="Constitution-save-prof" type="checkbox" />
               </li>
               <li>
-                <label for="Wisdom-save">Wisdom</label><input id="wis-save" value=""  name="Wisdom-save" type="text" /><input name="Wisdom-save-prof"  value="" id="wis-save-check" type="checkbox" />
+                <label for="Wisdom-save">Wisdom</label><input id="wis-save" value="${obj.wis_save}"  name="Wisdom-save" type="text" /><input name="Wisdom-save-prof"  ${obj.wis_save_check ? "checked" : ""} id="wis-save-check" type="checkbox" />
               </li>
               <li>
-                <label for="Intelligence-save">Intelligence</label><input  value="" id="int-save" name="Intelligence-save" type="text" /><input  value="" id="int-save-check" name="Intelligence-save-prof" type="checkbox" />
+                <label for="Intelligence-save">Intelligence</label><input  value="${obj.intellect_save}" id="int-save" name="Intelligence-save" type="text" /><input  ${obj.intellect_save_check ? "checked" : ""} id="int-save-check" name="Intelligence-save-prof" type="checkbox" />
               </li>
               <li>
-                <label for="Charisma-save">Charisma</label><input id="char-save" value=""  name="Charisma-save" type="text" /><input id="char-save-check"  value="" name="Charisma-save-prof" type="checkbox" />
+                <label for="Charisma-save">Charisma</label><input id="char-save" value="${obj.char_save}"  name="Charisma-save" type="text" /><input id="char-save-check"  ${obj.char_save_check ? "checked" : ""} name="Charisma-save-prof" type="checkbox" />
               </li>
             </ul>
             <div class="label">
@@ -411,58 +409,58 @@ function renderCharacter(obj){
           <div class="skills list-section box">
             <ul>
               <li>
-                <label for="Acrobatics">Acrobatics <span class="skill">(Dex)</span></label><input value=""  id="acrobatics" name="Acrobatics" type="text" /><input  value="" id="acrobatics-check" name="Acrobatics-prof" type="checkbox" />
+                <label for="Acrobatics">Acrobatics <span class="skill">(Dex)</span></label><input value=${obj.acrobatics}  id="acrobatics" name="Acrobatics" type="text" /><input  ${obj.acrobatics_check ? "checked" : ""} id="acrobatics-check" name="Acrobatics-prof" type="checkbox" />
               </li>
               <li>
-                <label for="Animal Handling">Animal Handling <span class="skill">(Wis)</span></label><input value=""  id="animal" name="Animal Handling" type="text" /><input  value="" id="animal-check" name="Animal Handling-prof" type="checkbox" />
+                <label for="Animal Handling">Animal Handling <span class="skill">(Wis)</span></label><input value="${obj.animal}"  id="animal" name="Animal Handling" type="text" /><input  ${obj.animal_check ? "checked" : ""} id="animal-check" name="Animal Handling-prof" type="checkbox" />
               </li>
               <li>
-                <label for="Arcana">Arcana <span class="skill">(Int)</span></label><input id="arcana" value=""  name="Arcana" type="text" /><input id="arcana-check"  value="" name="Arcana-prof" type="checkbox" />
+                <label for="Arcana">Arcana <span class="skill">(Int)</span></label><input id="arcana" value="${obj.arcana}"  name="Arcana" type="text" /><input id="arcana-check"  ${obj.arcana_check ? "checked" : ""} name="Arcana-prof" type="checkbox" />
               </li>
               <li>
-                <label for="Athletics">Athletics <span class="skill">(Str)</span></label><input  value="" id="athletic" name="Athletics" type="text" /><input  value="" id="athletic-check" name="Athletics-prof" type="checkbox" />
+                <label for="Athletics">Athletics <span class="skill">(Str)</span></label><input  value="${obj.athletic}" id="athletic" name="Athletics" type="text" /><input  ${obj.athletic_check ? "checked" : ""} id="athletic-check" name="Athletics-prof" type="checkbox" />
               </li>
               <li>
-                <label for="Deception">Deception <span class="skill">(Cha)</span></label><input id="deception" value=""  name="Deception" type="text" /><input id="decept-check"  value="" name="Deception-prof" type="checkbox" />
+                <label for="Deception">Deception <span class="skill">(Cha)</span></label><input id="deception" value="${obj.deception}"  name="Deception" type="text" /><input id="decept-check"  ${obj.deception_check ? "checked" : ""} name="Deception-prof" type="checkbox" />
               </li>
               <li>
-                <label for="History">History <span class="skill">(Int)</span></label><input id="hist" value=""  name="History" type="text" /><input id="hist-check"  value="" name="History-prof" type="checkbox" />
+                <label for="History">History <span class="skill">(Int)</span></label><input id="hist" value="${obj.history}"  name="History" type="text" /><input id="hist-check" ${obj.history_check ? "checked" : ""} name="History-prof" type="checkbox" />
               </li>
               <li>
-                <label for="Insight">Insight <span class="skill">(Wis)</span></label><input id="insight" value=""  name="Insight" type="text" /><input id="insight-check" value=""  name="Insight-prof" type="checkbox" />
+                <label for="Insight">Insight <span class="skill">(Wis)</span></label><input id="insight" value="${obj.insight}"  name="Insight" type="text" /><input id="insight-check" ${obj.insight_check ? "checked" : ""}  name="Insight-prof" type="checkbox" />
               </li>
               <li>
-                <label for="Intimidation">Intimidation <span class="skill">(Cha)</span></label><input id="intimidate" value=""  name="Intimidation" type="text" /><input id="intimidate-check"  value="" name="Intimidation-prof" type="checkbox" />
+                <label for="Intimidation">Intimidation <span class="skill">(Cha)</span></label><input id="intimidate" value="${obj.intimidation}"  name="Intimidation" type="text" /><input id="intimidate-check"  ${obj.intimidation_check ? "checked" : ""} name="Intimidation-prof" type="checkbox" />
               </li>
               <li>
-                <label for="Investigation">Investigation <span class="skill">(Int)</span></label><input id="investigate"  value="" name="Investigation" type="text" /><input id="investigate-check"  value="" name="Investigation-prof" type="checkbox" />
+                <label for="Investigation">Investigation <span class="skill">(Int)</span></label><input id="investigate"  value="${obj.investigation}" name="Investigation" type="text" /><input id="investigate-check"  ${obj.investigation_check ? "checked" : ""} name="Investigation-prof" type="checkbox" />
               </li>
               <li>
-                <label for="Medicine">Medicine <span class="skill">(Wis)</span></label><input id="med" name="Medicine" value=""  type="text" /><input id="med-check"  value="" name="Medicine-prof" type="checkbox" />
+                <label for="Medicine">Medicine <span class="skill">(Wis)</span></label><input id="med" name="Medicine" value="${obj.medicine}"  type="text" /><input id="med-check"  ${obj.medicine_check ? "checked" : ""} name="Medicine-prof" type="checkbox" />
               </li>
               <li>
-                <label for="Nature">Nature <span class="skill">(Int)</span></label><input id="nature" name="Nature"  value="" type="text" /><input id="nature-check"  value="" name="Nature-prof" type="checkbox" />
+                <label for="Nature">Nature <span class="skill">(Int)</span></label><input id="nature" name="Nature"  value="${obj.nature}" type="text" /><input id="nature-check"  ${obj.nature_check ? "checked" : ""} name="Nature-prof" type="checkbox" />
               </li>
               <li>
-                <label for="Perception">Perception <span class="skill">(Wis)</span></label><input id="percept" name="Perception" value=""  type="text" /><input id="percept-check"  value="" name="Perception-prof" type="checkbox" />
+                <label for="Perception">Perception <span class="skill">(Wis)</span></label><input id="percept" name="Perception" value="${obj.perception}"  type="text" /><input id="percept-check"  ${obj.perception_check ? "checked" : ""} name="Perception-prof" type="checkbox" />
               </li>
               <li>
-                <label for="Performance">Performance <span class="skill">(Cha)</span></label><input id="perform" name="Performance"  value="" type="text" /><input id="perform-check" value=""  name="Performance-prof" type="checkbox" />
+                <label for="Performance">Performance <span class="skill">(Cha)</span></label><input id="perform" name="Performance"  value="${obj.performance}" type="text" /><input id="perform-check" ${obj.performance_check ? "checked" : ""}  name="Performance-prof" type="checkbox" />
               </li>
               <li>
-                <label for="Persuasion">Persuasion <span class="skill">(Cha)</span></label><input id="persuade" name="Persuasion"  value="" type="text" /><input id="persuade-check"  value="" name="Persuasion-prof" type="checkbox" />
+                <label for="Persuasion">Persuasion <span class="skill">(Cha)</span></label><input id="persuade" name="Persuasion"  value="${obj.persuasion}" type="text" /><input id="persuade-check"  ${obj.persuasion_check ? "checked" : ""} name="Persuasion-prof" type="checkbox" />
               </li>
               <li>
-                <label for="Religion">Religion <span class="skill">(Int)</span></label><input id="relig" name="Religion"  value="" type="text" /><input id="relig-check"  value="" name="Religion-prof" type="checkbox" />
+                <label for="Religion">Religion <span class="skill">(Int)</span></label><input id="relig" name="Religion"  value="${obj.religion}" type="text" /><input id="relig-check"  ${obj.religion_check ? "checked" : ""} name="Religion-prof" type="checkbox" />
               </li>
               <li>
-                <label for="Sleight of Hand">Sleight of Hand <span class="skill">(Dex)</span></label><input id="soh"  value="" name="Sleight of Hand" type="text" /><input id="soh-check"  value="" name="Sleight of Hand-prof" type="checkbox" />
+                <label for="Sleight of Hand">Sleight of Hand <span class="skill">(Dex)</span></label><input id="soh"  value="${obj.sleight_of_hand}" name="Sleight of Hand" type="text" /><input id="soh-check"  ${obj.soh_check ? "checked" : ""} name="Sleight of Hand-prof" type="checkbox" />
               </li>
               <li>
-                <label for="Stealth">Stealth <span class="skill">(Dex)</span></label><input id="stealth" name="Stealth"  value="" type="text" /><input id="stealth-check" name="Stealth-prof" value=""  type="checkbox" />
+                <label for="Stealth">Stealth <span class="skill">(Dex)</span></label><input id="stealth" name="Stealth"  value="${obj.stealth}" type="text" /><input id="stealth-check" name="Stealth-prof" ${obj.stealth_check ? "checked" : ""}  type="checkbox" />
               </li>
               <li>
-                <label for="Survival">Survival <span class="skill">(Wis)</span></label><input id="survival"  value="" name="Survival" type="text" /><input id="survival-check"  value="" name="Survival-prof" type="checkbox" />
+                <label for="Survival">Survival <span class="skill">(Wis)</span></label><input id="survival"  value="${obj.survival}" name="Survival" type="text" /><input id="survival-check"  ${obj.survival_check ? "checked" : ""} name="Survival-prof" type="checkbox" />
               </li>
             </ul>
             <div class="label">
@@ -628,19 +626,19 @@ function postCharUpdate(e){
           intellect: document.querySelector("#Intelligencescore").value ,
           charisma: document.querySelector("#Charismascore").value ,
           strength_save: document.querySelector("#str-save").value , 
-          strength_save_check: document.querySelector("#str-save-prof").value ,  
+          strength_save_check: document.querySelector("#str-save-prof").checked ,  
           dex_save: document.querySelector("#dex-save").value ,
-          dex_save_check: document.querySelector("#str-save-check").value ,
+          dex_save_check: document.querySelector("#str-save-check").checked ,
           const_save: document.querySelector("#const-save").value ,
-          const_save_check: document.querySelector("#const-save-check").value , 
+          const_save_check: document.querySelector("#const-save-check").checked , 
           wis_save: document.querySelector("#wis-save").value ,
-          wis_save_check: document.querySelector("#wis-save-check").value ,
+          wis_save_check: document.querySelector("#wis-save-check").checked ,
           intellect_save: document.querySelector("#int-save").value ,
-          intellect_save_check:document.querySelector("#int-save-check").value ,
+          intellect_save_check:document.querySelector("#int-save-check").checked ,
           char_save: document.querySelector("#char-save").value ,
           char_save_check: document.querySelector("#char-save-check").value ,
           acrobatics: document.querySelector("#acrobatics").value ,
-          acrobatics_check: document.querySelector("#acrobatics-check").value ,
+          acrobatics_check: document.querySelector("#acrobatics-check").checked,
           animal: document.querySelector("#animal").value ,
           animal_check: document.querySelector("#animal-check").value ,
           arcana: document.querySelector("#arcana").value ,
