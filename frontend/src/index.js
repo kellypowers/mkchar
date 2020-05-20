@@ -384,7 +384,7 @@ function renderCharacter(obj){
           <div class="saves list-section box">
             <ul>
               <li>
-                <label for="Strength-save">Strength</label><input  value="${obj.strength_save}" id="str-save" name="Strength-save" type="text" /><input id="str-save-prof"  ${obj.strength_save_check ? "checked" : ""} name="Strength-save-prof" type="checkbox" />
+                <label for="Strength-save">Strength</label><input  value="${obj.strength_save}" id="str-save" name="Strength-save" type="text" /><input id="str-save-check"  ${obj.strength_save_check ? "checked" : ""} name="Strength-save-prof" type="checkbox" />
               </li>
               <li>
                 <label for="Dexterity-save">Dexterity</label><input  value="${obj.dex_save}" id="dex-save" name="Dexterity-save" type="text" /><input id="dex-save-check"  ${obj.dex_save_check ? "checked" : ""} name="Dexterity-save-prof" type="checkbox" />
@@ -626,7 +626,7 @@ function postCharUpdate(e){
           intellect: document.querySelector("#Intelligencescore").value ,
           charisma: document.querySelector("#Charismascore").value ,
           strength_save: document.querySelector("#str-save").value , 
-          strength_save_check: document.querySelector("#str-save-prof").checked ,  
+          strength_save_check: document.querySelector("#str-save-check").checked ,  
           dex_save: document.querySelector("#dex-save").value ,
           dex_save_check: document.querySelector("#str-save-check").checked ,
           const_save: document.querySelector("#const-save").value ,
@@ -658,7 +658,7 @@ function postCharUpdate(e){
           medicine: document.querySelector("#med").value ,
           medicine_check: document.querySelector("#med-check").checked ,
           nature: document.querySelector("#nature").value ,
-          nature_check: document.querySelector("nature-check").checked ,  
+          nature_check: document.querySelector("#nature-check").checked ,  
           perception: document.querySelector("#percept").value ,
           perception_check: document.querySelector("#percept-check").checked ,
           performance: document.querySelector("#perform").value ,

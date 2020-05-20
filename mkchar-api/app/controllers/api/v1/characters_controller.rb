@@ -37,7 +37,7 @@ class Api::V1::CharactersController < ApplicationController
         puts "character is #{character}  character params is #{character_params}"
         if character.update(character_params)
             # render json: character.to_json(:include => {:player => {:only => [:player_id, :player_name]} })
-            render json: {message: "test"}
+            render json: {message: "success"}
             puts "updated successfully"
         else
             puts "not updated"
