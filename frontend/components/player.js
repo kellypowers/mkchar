@@ -4,7 +4,8 @@ class Player
     {
         this.id = id;
         this.player_name = player_name;
-        this.characters = characters.map(c => new Character(c.name, c.race, c.charClass, c.background, c.id, this));
+        // this.characters = characters.map(c => new Character(c.name, c.race, c.charClass, c.background, c.id, this));
+        this.characters = [];
     }
 
     renderCharacters() {
@@ -17,11 +18,15 @@ class Player
         return charList
     }
 
-    // addCharacter(character) {
-    //     this.characters.push(character)
+    // addCharacter() {
+        // fetch(`http://localhost:3000/api/v1/players/${this.id}/characters`)
+        // .then(response => response.json())
+        // .then(data.forEach(character=> this.characters.push(character)))
     // }
 
     // getCharacters(){
     //     return this.characters;
     // }
+
+
 }

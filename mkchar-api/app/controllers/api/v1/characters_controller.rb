@@ -2,6 +2,7 @@ class Api::V1::CharactersController < ApplicationController
     # before_action :set_player! #, only: [:show, :update, :destroy]
 
     def index 
+        @player = Player.find(params[:player_id])
         @characters = @player.characters
         puts "params are #{params}, characters are #{@characters}"
         render json: @characters, status: 200

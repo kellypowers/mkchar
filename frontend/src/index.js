@@ -72,6 +72,7 @@ function renderPlayerInfo(e) {
     main.innerHTML = `    <div id="playerinfo">
     
     </div> <div id="characterform"></div>`
+    // Get player already made, generate the DOM elements to display that player's characters
     getOldPlayer(e).then(obj => {
         console.log(obj);
         const playerInfo = document.getElementById('playerinfo');
@@ -87,6 +88,7 @@ function renderPlayerInfo(e) {
     eachPlayerDiv.appendChild(playerDeleteButton);
     playerHeading.innerHTML = `${obj.player_name}'s characters`;
     let charList = document.createElement('ul');
+    // Get player's characters and show
     obj.characters.forEach (character => {
         // console.log(`character is ${JSON.stringify(character)}`)
         let eachCharDiv = document.createElement('div');

@@ -1,4 +1,4 @@
-line 28 
+//line 28 GET ALL PLAYERS
 function getPlayers() {
     return fetch(baseUrl).then(res => res.json()).then(players => {
         players.forEach(player => renderPlayerList(player))
@@ -261,3 +261,36 @@ function postCharUpdate(e){
     //   });`
     )
  }
+
+
+
+ newt = new Character("newt", "Elf", "Bard", "Criminal")
+Character {dexterity: 11, constitution: 8, wisdom: 9, intellect: 12, charisma: 5, …}
+alignment: "Chaotic G/E"
+attacks_and_spells: ""
+background: "Criminal"
+bonds: ""
+charClass: "Bard"
+charisma: 5
+constitution: 8
+dexterity: 11
+equipment: ""
+features_and_traits: ""
+flaws: ""
+free_ability_pts: 0
+hitDice: "1d8"
+hp: 4
+id: undefined
+ideals: ""
+intellect: 12
+language: 2
+name: "newt"
+personality_traits: ""
+player: undefined
+proficiencies: 1
+race: "Elf"
+saving_throws: (2) ["Dexterity", "Charisma"]0: "Dexterity"1: "Charisma"length: 2__proto__: Array(0)
+speed: 30
+strength: 10
+wisdom: 9
+__proto__: Background
