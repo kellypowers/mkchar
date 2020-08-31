@@ -23,13 +23,39 @@ function renderPlayerDiv(){
   </div>`
   getPlayers();
   createNewPlayer();
+  createSortButton();
 }
 
+// Sorts list of players in reverse alphabetical order, coding challenge during review
+function getList(){
+  const listPlayers = document.getElementById('list-player-names');
+  listPlayers.innerHTML = '';
+  fetch(baseUrl)
+    .then(res => res.json())
+    .then(players => {
+        console.log(players)
+        return players.sort(function(a, b){
+           return b.player_name.toLowerCase() > a.player_name.toLowerCase() ? 1 : -1}); 
+     })
+
+     .then(players => players.forEach(player => renderPlayerList(player)))
+}
+
+// sort list of players, coding challenge during review
+function createSortButton(){
+  let sortButton = document.createElement("button");
+  sortButton.addEventListener("click", getList);
+  sortButton.innerHTML = "Sort Z-A !";
+  main.appendChild(sortButton);
+}
+
+// gets players
 function getPlayers() {
     return fetch(baseUrl).then(res => res.json()).then(players => {
         players.forEach(player => renderPlayerList(player))
     })
 }
+// Renders player list by creating an li for wach player
 function renderPlayerList(data) {
     const listPlayers = document.getElementById('list-player-names');
     let li = document.createElement('li');
@@ -39,7 +65,7 @@ function renderPlayerList(data) {
     document.querySelector('#input-new-playername').value = "";
     listPlayers.appendChild(li);
 }
-
+// adds button for creating new player
 function createNewPlayer(){
     let newPlayerButton = document.querySelector('#playername-submit');
     newPlayerButton.addEventListener("click", getNewPlayer);
@@ -57,25 +83,22 @@ function getNewPlayer(e){
     body: JSON.stringify({
         player_name: `${input}`
     })
-})
-.then(response => response.json())
-.then(data => {
-    renderPlayerDiv();
+  })
+  .then(response => response.json())
+  .then(data => {
+      renderPlayerDiv();
 
-})
-
-
+  })
 }
 
-
 function renderPlayerInfo(e) {
-    main.innerHTML = `    <div id="playerinfo">
-    
-    </div> <div id="characterform"></div>`
-    // Get player already made, generate the DOM elements to display that player's characters
-    getOldPlayer(e).then(obj => {
-        console.log(obj);
-        const playerInfo = document.getElementById('playerinfo');
+  main.innerHTML = `    <div id="playerinfo">
+  
+  </div> <div id="characterform"></div>`
+  // Get player already made, generate the DOM elements to display that player's characters
+  getOldPlayer(e).then(obj => {
+    console.log(obj);
+    const playerInfo = document.getElementById('playerinfo');
     let playerHeading = document.createElement('h2');
     let eachPlayerDiv = document.createElement('div');
     let newCharButton = document.createElement("button");
@@ -89,18 +112,17 @@ function renderPlayerInfo(e) {
     playerHeading.innerHTML = `${obj.player_name}'s characters`;
     let charList = document.createElement('ul');
     // Get player's characters and show
-    obj.characters.forEach (character => {
-        // console.log(`character is ${JSON.stringify(character)}`)
-        let eachCharDiv = document.createElement('div');
-        eachCharDiv.id = `char-${character.id}`;
-        let charItem = document.createElement('li');
-        charItem.innerHTML = `Character Name: ${character.name}, Race: ${character.race}, Class: ${character.charClass}`;
-        charItem.id = `character-${character.id}`;
-        charItem.addEventListener("click", showCharacter);
-        eachCharDiv.appendChild(charItem);
-        charList.appendChild(eachCharDiv);
-        // add event listener to click to view, in view add buttons to edit and to delete
-        // add delete button and edit button
+    obj.characters.forEach (character => {  
+      let eachCharDiv = document.createElement('div');
+      eachCharDiv.id = `char-${character.id}`;
+      let charItem = document.createElement('li');
+      charItem.innerHTML = `Character Name: ${character.name}, Race: ${character.race}, Class: ${character.charClass}`;
+      charItem.id = `character-${character.id}`;
+      charItem.addEventListener("click", showCharacter);
+      eachCharDiv.appendChild(charItem);
+      charList.appendChild(eachCharDiv);
+      // add event listener to click to view, in view add buttons to edit and to delete
+      // add delete button and edit button
     });
     changePlayerButton = document.createElement('button');
     changePlayerButton.innerText = "Change Player";
@@ -111,8 +133,7 @@ function renderPlayerInfo(e) {
     eachPlayerDiv.appendChild(playerHeading);
     eachPlayerDiv.appendChild(charList);
     playerInfo.appendChild(eachPlayerDiv);
-    
-    })
+  })
 }
 
 //GET PLAYER THAT ALREADY EXISTS
@@ -190,51 +211,47 @@ function newChar(){
 
 // EVENT LSITENER CALLBACK TO CREATE A NEW CHARACTER WITH INPUT OF NAME, RACE, CLASS. CREATES NEW INSTANCE OF CHARACTER CLASS AND ASSIGNS ABILITY SCORES.
 // instantiate char class
-  function createChar(e) {
-    e.preventDefault();
-    console.log("in createChar fun");
-    const charBackgroundInput = document.querySelector('#new-char-background').value;
-    const charClassInput = document.querySelector('#new-char-class').value;
-    console.log(`char class c ${charClassInput}`);
-    const raceInput = document.querySelector('#new-char-race').value;
-    const nameInput = document.querySelector('#new-char-name').value;
-    // let charNew = new Character(`${nameInput}`, `${raceInput}`, `${charClassInput}`);
-    let charNew = new Character(`${nameInput}`, `${raceInput}`, `${charClassInput}`, `${charBackgroundInput}`);
-    // console.log(`${charNew}`);
-    let playerid = document.querySelector('#playerinfo').querySelector('div').id.split('-')[1];
-    console.log(`newchar is ${charNew}`);
-    fetch(`http://localhost:3000/api/v1/players/${playerid}/characters`, {
-    headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json"
-    },
-    method: "POST",
-    body: JSON.stringify({
-        playerID: `${playerid}`,
-        name: `${charNew.name}`,
-        race: `${charNew.race}`,
-        charClass: `${charNew.charClass}`,
-        intellect: `${charNew.intellect}`,
-        wisdom: `${charNew.wisdom}`,
-        charisma: `${charNew.charisma}`,
-        dexterity: `${charNew.dexterity}`,
-        constitution: `${charNew.constitution}`,
-        strength: `${charNew.strength}`,
-        free_ability_pts: `${charNew.free_ability_pts}`,
-        speed: `${charNew.speed}`,
-        hitDice: `${charNew.hitDice}`,
-        hp: `${charNew.hp}`,
-        background: `${charNew.background}`,
-        alignment: `${charNew.alignment}`,
-        xp: 0,
-        equipment: `${charNew.equipment}`,
-        attacks_and_spellcasting: `${charNew.attacks_and_spells}`
-        
-
+function createChar(e) {
+  e.preventDefault();
+  console.log("in createChar fun");
+  const charBackgroundInput = document.querySelector('#new-char-background').value;
+  const charClassInput = document.querySelector('#new-char-class').value;
+  console.log(`char class c ${charClassInput}`);
+  const raceInput = document.querySelector('#new-char-race').value;
+  const nameInput = document.querySelector('#new-char-name').value;
+  let charNew = new Character(`${nameInput}`, `${raceInput}`, `${charClassInput}`, `${charBackgroundInput}`);
+  let playerid = document.querySelector('#playerinfo').querySelector('div').id.split('-')[1];
+  console.log(`newchar is ${charNew}`);
+  fetch(`http://localhost:3000/api/v1/players/${playerid}/characters`, {
+  headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json"
+  },
+  method: "POST",
+  body: JSON.stringify({
+      playerID: `${playerid}`,
+      name: `${charNew.name}`,
+      race: `${charNew.race}`,
+      charClass: `${charNew.charClass}`,
+      intellect: `${charNew.intellect}`,
+      wisdom: `${charNew.wisdom}`,
+      charisma: `${charNew.charisma}`,
+      dexterity: `${charNew.dexterity}`,
+      constitution: `${charNew.constitution}`,
+      strength: `${charNew.strength}`,
+      free_ability_pts: `${charNew.free_ability_pts}`,
+      speed: `${charNew.speed}`,
+      hitDice: `${charNew.hitDice}`,
+      hp: `${charNew.hp}`,
+      background: `${charNew.background}`,
+      alignment: `${charNew.alignment}`,
+      xp: 0,
+      equipment: `${charNew.equipment}`,
+      attacks_and_spellcasting: `${charNew.attacks_and_spells}`
     })
-})
-.then(response => response.json())
-.then(data => {
+  })
+  .then(response => response.json())
+  .then(data => {
     console.log(data);
     let list = document.querySelector('ul');
     let eachCharDiv = document.createElement('div');
@@ -247,46 +264,40 @@ function newChar(){
     list.appendChild(eachCharDiv)
 
     renderCharacter(data);
-})
+  })
 }
 
-
-// }
 // delete player WORKS. deletes player and renders the player list, the deleted player removed!
 function deletePlayer(e) {
-    let playerid = e.target.parentElement.id.split('-')[1]
-    console.log(`id is ${playerid}`);
-    fetch(`http://localhost:3000/api/v1/players/${playerid}`, {
-        headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json"
-        },
-        method: "DELETE",
-        body: JSON.stringify({
-            playerID: `${playerid}`,
-        })
+  let playerid = e.target.parentElement.id.split('-')[1]
+  console.log(`id is ${playerid}`);
+  fetch(`http://localhost:3000/api/v1/players/${playerid}`, {
+    headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json"
+    },
+    method: "DELETE",
+    body: JSON.stringify({
+      playerID: `${playerid}`,
     })
-    .then(response => response.json())
-    .then(data => {
-        renderPlayerDiv();
-        let deletedListItm = document.getElementById(`${data.playerId}`);
-        deletedListItm.remove();
-        })
+  })
+  .then(response => response.json())
+  .then(data => {
+    renderPlayerDiv();
+    let deletedListItm = document.getElementById(`${data.playerId}`);
+    deletedListItm.remove();
+  })
 }
+
 function showCharacter(e){
-    
-    // console.log(e);
-    let playerid = document.querySelector('#main').querySelector('div').querySelector('div').id.split('-')[1];
-    // let playerid = e.target.parentElement.parentElement.parentElement.id.split('-')[1]
-    let characterid = e.target.id.split('-')[1];
-    // let characterid = document.querySelector('form').id.split('-')[1];
-    // console.log(`jfsajsdk id is ${(e.target.parentElement.parentElement.parentElement.id.split('-')[1])}`);
-    return fetch(`http://localhost:3000/api/v1/players/${playerid}/characters/${characterid}`)
-.then(response => response.json())
-.then(obj => {
-  console.log(`${JSON.stringify(obj)}`);
+  let playerid = document.querySelector('#main').querySelector('div').querySelector('div').id.split('-')[1];
+  let characterid = e.target.id.split('-')[1];
+  return fetch(`http://localhost:3000/api/v1/players/${playerid}/characters/${characterid}`)
+  .then(response => response.json())
+  .then(obj => {
     renderCharacter(obj)
-})}
+  })
+}
 
 
 function renderCharacter(obj){
@@ -566,34 +577,31 @@ function renderCharacter(obj){
 }
 
 function deleteChar() {
-    let deleteCharButton = document.querySelector('#delete-char');
-    deleteCharButton.addEventListener("click", deleteCharacter)
+  let deleteCharButton = document.querySelector('#delete-char');
+  deleteCharButton.addEventListener("click", deleteCharacter)
 }
 
 function deleteCharacter(e){
-    e.preventDefault();
-    let playerid = document.querySelector('#main').querySelector('div').querySelector('div').id.split('-')[1]
-    let characterid = document.querySelector('form').id.split('-')[1];
-    return fetch(`http://localhost:3000/api/v1/players/${playerid}/characters/${characterid}`, {
-      headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json"
-      }, 
-      method: "DELETE",
-      body: JSON.stringify({
-          characterID: `${characterid}`,
+  e.preventDefault();
+  let playerid = document.querySelector('#main').querySelector('div').querySelector('div').id.split('-')[1]
+  let characterid = document.querySelector('form').id.split('-')[1];
+  return fetch(`http://localhost:3000/api/v1/players/${playerid}/characters/${characterid}`, {
+    headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+    }, 
+    method: "DELETE",
+    body: JSON.stringify({
+      characterID: `${characterid}`,
     })
-})
-.then(response => response.json())
-.then(data => {
-    console.log(data);
+  })
+  .then(response => response.json())
+  .then(data => {
     document.getElementById(`char-${data.characterId}`).remove();
     document.querySelector('form').remove();
     document.querySelector('#delete-char').remove();
-    })
+  })
 }
-
-
 
 
 function updateChar(){
@@ -603,105 +611,98 @@ function updateChar(){
   }
   
 function postCharUpdate(e){
-    e.preventDefault();
-    let playerid = document.querySelector('#main').querySelector('div').querySelector('div').id.split('-')[1]
-    let characterid = document.querySelector('form').id.split('-')[1];
-      return fetch(`http://localhost:3000/api/v1/players/${playerid}/characters/${characterid}`, {
-      headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json"
-      }, 
-      method: "PATCH",
-      body: JSON.stringify({
-          
-          name: document.querySelector("#charNameForm").value ,
-          charClass: document.querySelector("#charClassForm").value  ,
-          background: document.querySelector("#charBackgroundForm").value ,
-          player_name: document.querySelector("#playerNameForm").value ,
-          race: document.querySelector("#charFormRace").value  ,
-          alignment: document.querySelector("#charAlignmentForm").value  ,
-          xp: document.querySelector("#experiencepoints").value  , 
-          strength: document.querySelector("#Strengthscore").value ,     
-          dexterity: document.querySelector("#Dexterityscore").value ,
-          constitution: document.querySelector("#Constitutionscore").value ,
-          wisdom: document.querySelector("#Wisdomscore").value ,
-          intellect: document.querySelector("#Intelligencescore").value ,
-          charisma: document.querySelector("#Charismascore").value ,
-          strength_save: document.querySelector("#str-save").value , 
-          strength_save_check: document.querySelector("#str-save-check").checked ,  
-          dex_save: document.querySelector("#dex-save").value ,
-          dex_save_check: document.querySelector("#str-save-check").checked ,
-          const_save: document.querySelector("#const-save").value ,
-          const_save_check: document.querySelector("#const-save-check").checked , 
-          wis_save: document.querySelector("#wis-save").value ,
-          wis_save_check: document.querySelector("#wis-save-check").checked ,
-          intellect_save: document.querySelector("#int-save").value ,
-          intellect_save_check:document.querySelector("#int-save-check").checked ,
-          char_save: document.querySelector("#char-save").value ,
-          char_save_check: document.querySelector("#char-save-check").checked ,
-          acrobatics: document.querySelector("#acrobatics").value ,
-          acrobatics_check: document.querySelector("#acrobatics-check").checked,
-          animal: document.querySelector("#animal").value ,
-          animal_check: document.querySelector("#animal-check").checked ,
-          arcana: document.querySelector("#arcana").value ,
-          arcana_check: document.querySelector("#arcana-check").checked ,
-          athletic: document.querySelector("#athletic").value ,
-          athletic_check: document.querySelector("#athletic-check").checked , 
-          deception: document.querySelector("#deception").value ,
-          deception_check: document.querySelector("#decept-check").checked , 
-          history: document.querySelector("#hist").value ,
-          history_check:  document.querySelector("#hist-check").checked ,
-          insight: document.querySelector("#insight").value ,
-          insight_check: document.querySelector("#insight-check").checked ,
-          intimidation: document.querySelector("#intimidate").value ,
-          intimidation_check: document.querySelector("#intimidate-check").checked  , 
-          investigation: document.querySelector("#investigate").value ,
-          investigation_check: document.querySelector("#investigate-check").checked ,
-          medicine: document.querySelector("#med").value ,
-          medicine_check: document.querySelector("#med-check").checked ,
-          nature: document.querySelector("#nature").value ,
-          nature_check: document.querySelector("#nature-check").checked ,  
-          perception: document.querySelector("#percept").value ,
-          perception_check: document.querySelector("#percept-check").checked ,
-          performance: document.querySelector("#perform").value ,
-          performance_check: document.querySelector("#perform-check").checked ,
-          persuasion: document.querySelector("#persuade").value ,
-          persuasion_check: document.querySelector("#persuade-check").checked ,
-          religion: document.querySelector("#relig").value ,
-          religion_check: document.querySelector("#relig-check").checked ,  
-          sleight_of_hand: document.querySelector("#soh").value ,
-          soh_check: document.querySelector("#soh-check").checked ,
-          stealth: document.querySelector("#stealth").value ,
-          stealth_check: document.querySelector("#stealth-check").checked ,
-          survival: document.querySelector("#survival").value ,
-          survival_check: document.querySelector("#survival-check").checked ,
-          proficiencybonus: document.querySelector("#proficiencybonus").value ,
-          passive_perception: document.querySelector("#passiveperception").value ,
-          languages_and_proficiencies: document.querySelector("#proficiencies_and_languages").value ,
-          armor_class: document.querySelector("#ac").value ,
-          initiative: document.querySelector("#initiative").value ,
-          speed: document.querySelector("#speed").value ,
-          hp: document.querySelector("#hp").value ,
-          currenthp: document.querySelector("#currenthp").value ,
-          temphp: document.querySelector("#temphp").value ,
-          hitDice: document.querySelector("#hitDice").value ,
-          attacks_and_spells: document.querySelector("#attacks_and_spellcasting").value ,
-          equipment: document.querySelector("#equipment").value ,
-          personality_traits: document.querySelector("#personality").value ,
-          ideals: document.querySelector("#ideals").value ,
-          bonds: document.querySelector("#bonds").value ,
-          flaws: document.querySelector("#flaws").value ,
-          features_and_traits: document.querySelector("#features_and_traits").value 
-      }
-    ) 
-      }).then(response => response.json())
-    .then(data => console.log(data)
-    //    renderCharacter(data)
-    // renderCharacter(data)
-    // }).catch(function(error) {
-    //     console.log(error.message);
-    //   });`
-    )
- }
+  e.preventDefault();
+  let playerid = document.querySelector('#main').querySelector('div').querySelector('div').id.split('-')[1]
+  let characterid = document.querySelector('form').id.split('-')[1];
+    return fetch(`http://localhost:3000/api/v1/players/${playerid}/characters/${characterid}`, {
+    headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+    }, 
+    method: "PATCH",
+    body: JSON.stringify({
+      name: document.querySelector("#charNameForm").value ,
+      charClass: document.querySelector("#charClassForm").value  ,
+      background: document.querySelector("#charBackgroundForm").value ,
+      player_name: document.querySelector("#playerNameForm").value ,
+      race: document.querySelector("#charFormRace").value  ,
+      alignment: document.querySelector("#charAlignmentForm").value  ,
+      xp: document.querySelector("#experiencepoints").value  , 
+      strength: document.querySelector("#Strengthscore").value ,     
+      dexterity: document.querySelector("#Dexterityscore").value ,
+      constitution: document.querySelector("#Constitutionscore").value ,
+      wisdom: document.querySelector("#Wisdomscore").value ,
+      intellect: document.querySelector("#Intelligencescore").value ,
+      charisma: document.querySelector("#Charismascore").value ,
+      strength_save: document.querySelector("#str-save").value , 
+      strength_save_check: document.querySelector("#str-save-check").checked ,  
+      dex_save: document.querySelector("#dex-save").value ,
+      dex_save_check: document.querySelector("#str-save-check").checked ,
+      const_save: document.querySelector("#const-save").value ,
+      const_save_check: document.querySelector("#const-save-check").checked , 
+      wis_save: document.querySelector("#wis-save").value ,
+      wis_save_check: document.querySelector("#wis-save-check").checked ,
+      intellect_save: document.querySelector("#int-save").value ,
+      intellect_save_check:document.querySelector("#int-save-check").checked ,
+      char_save: document.querySelector("#char-save").value ,
+      char_save_check: document.querySelector("#char-save-check").checked ,
+      acrobatics: document.querySelector("#acrobatics").value ,
+      acrobatics_check: document.querySelector("#acrobatics-check").checked,
+      animal: document.querySelector("#animal").value ,
+      animal_check: document.querySelector("#animal-check").checked ,
+      arcana: document.querySelector("#arcana").value ,
+      arcana_check: document.querySelector("#arcana-check").checked ,
+      athletic: document.querySelector("#athletic").value ,
+      athletic_check: document.querySelector("#athletic-check").checked , 
+      deception: document.querySelector("#deception").value ,
+      deception_check: document.querySelector("#decept-check").checked , 
+      history: document.querySelector("#hist").value ,
+      history_check:  document.querySelector("#hist-check").checked ,
+      insight: document.querySelector("#insight").value ,
+      insight_check: document.querySelector("#insight-check").checked ,
+      intimidation: document.querySelector("#intimidate").value ,
+      intimidation_check: document.querySelector("#intimidate-check").checked  , 
+      investigation: document.querySelector("#investigate").value ,
+      investigation_check: document.querySelector("#investigate-check").checked ,
+      medicine: document.querySelector("#med").value ,
+      medicine_check: document.querySelector("#med-check").checked ,
+      nature: document.querySelector("#nature").value ,
+      nature_check: document.querySelector("#nature-check").checked ,  
+      perception: document.querySelector("#percept").value ,
+      perception_check: document.querySelector("#percept-check").checked ,
+      performance: document.querySelector("#perform").value ,
+      performance_check: document.querySelector("#perform-check").checked ,
+      persuasion: document.querySelector("#persuade").value ,
+      persuasion_check: document.querySelector("#persuade-check").checked ,
+      religion: document.querySelector("#relig").value ,
+      religion_check: document.querySelector("#relig-check").checked ,  
+      sleight_of_hand: document.querySelector("#soh").value ,
+      soh_check: document.querySelector("#soh-check").checked ,
+      stealth: document.querySelector("#stealth").value ,
+      stealth_check: document.querySelector("#stealth-check").checked ,
+      survival: document.querySelector("#survival").value ,
+      survival_check: document.querySelector("#survival-check").checked ,
+      proficiencybonus: document.querySelector("#proficiencybonus").value ,
+      passive_perception: document.querySelector("#passiveperception").value ,
+      languages_and_proficiencies: document.querySelector("#proficiencies_and_languages").value ,
+      armor_class: document.querySelector("#ac").value ,
+      initiative: document.querySelector("#initiative").value ,
+      speed: document.querySelector("#speed").value ,
+      hp: document.querySelector("#hp").value ,
+      currenthp: document.querySelector("#currenthp").value ,
+      temphp: document.querySelector("#temphp").value ,
+      hitDice: document.querySelector("#hitDice").value ,
+      attacks_and_spells: document.querySelector("#attacks_and_spellcasting").value ,
+      equipment: document.querySelector("#equipment").value ,
+      personality_traits: document.querySelector("#personality").value ,
+      ideals: document.querySelector("#ideals").value ,
+      bonds: document.querySelector("#bonds").value ,
+      flaws: document.querySelector("#flaws").value ,
+      features_and_traits: document.querySelector("#features_and_traits").value 
+    }) 
+  }).then(response => response.json())
+  .then(data => console.log(data)
+  )
+}
   
   

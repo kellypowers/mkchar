@@ -11,7 +11,6 @@ class CharClass extends Race {
           this.hitDice = "1d12";
           this.hp += Math.floor(Math.random()*12+1) + this.modifier(this.constitution);
           this.saving_throws.push("Strength", "Constitution");
-          // console.log(`hp under class is ${this.hp}`);
           break;
         case 'Bard':
           this.hitDice = "1d8";

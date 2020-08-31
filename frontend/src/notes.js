@@ -294,3 +294,96 @@ speed: 30
 strength: 10
 wisdom: 9
 __proto__: Background
+
+
+function printDiv(divName) {
+    var printContents = document.getElementById(divName).innerHTML;
+    var originalContents = document.body.innerHTML;
+
+    document.body.innerHTML = printContents;
+
+    window.print();
+
+    document.body.innerHTML = originalContents;
+}
+
+<input type="button" onclick="printDiv('characterform')" value="Print" />
+
+
+let players = fetch(baseUrl).then(res => res.json()).then(players => {
+    console.log(players)})
+(12) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]
+0: {id: 1, player_name: "Kelly", characters: Array(10)}
+1: {id: 2, player_name: "Erin", characters: Array(1)}
+2: {id: 3, player_name: "Alyse", characters: Array(1)}
+3: {id: 4, player_name: "John", characters: Array(1)}
+4: {id: 24, player_name: "blah", characters: Array(0)}
+5: {id: 26, player_name: "cdcd", characters: Array(6)}
+6: {id: 29, player_name: "123", characters: Array(0)}
+7: {id: 32, player_name: "newplayer", characters: Array(1)}
+8: {id: 36, player_name: "kellypwoers", characters: Array(0)}
+9: {id: 47, player_name: "kellypowers", characters: Array(1)}
+10: {id: 48, player_name: "morgan", characters: Array(4)}
+11: {id: 51, player_name: "Juan", characters: Array(0)}
+
+
+fetch(baseUrl).then(res => res.json()).then(players => {
+    players.sort(function(a, b){
+      console.log("a is " + `${JSON.stringify(a)}`);
+      console.log("b is " + `${JSON.stringify(b)}`);
+      return a-b});})
+Promise {<pending>}
+VM13697:3 a is {"id":2,"player_name":"Erin","characters":[{"id":4,"name":"Charlie","charClass":"Bard","race":"Halfling"}]}
+VM13697:4 b is {"id":1,"player_name":"Kelly","characters":[{"id":2,"name":"Auriga","charClass":"Warrior","race":"Dwarf"},{"id":3,"name":"KP","charClass":"Druid","race":"Half-Elf"},{"id":7,"name":"yep","charClass":"Dwarf","race":"Barbarian"},{"id":8,"name":"new","charClass":"Half-Elf","race":"Cleric"},{"id":9,"name":"hello","charClass":"Half-Orc","race":"Paladin"},{"id":10,"name":"leena","charClass":"Half-Orc","race":"Barbarian"},{"id":11,"name":"hkjk","charClass":"Dwarf","race":"Barbarian"},{"id":20,"name":"yep","charClass":"Barbarian","race":"Dwarf"},{"id":37,"name":"new!","charClass":"Barbarian","race":"Dwarf"},{"id":35,"name":"yep yep yep","charClass":"Barbarian/1","race":"Dwarf"}]}
+VM13697:3 a is {"id":3,"player_name":"Alyse","characters":[{"id":6,"name":"Mucca","charClass":"Barbarian","race":"Half-Orc"}]}
+VM13697:4 b is {"id":2,"player_name":"Erin","characters":[{"id":4,"name":"Charlie","charClass":"Bard","race":"Halfling"}]}
+VM13697:3 a is {"id":4,"player_name":"John","characters":[{"id":5,"name":"Leena","charClass":"Fighter","race":"Dragonborn"}]}
+VM13697:4 b is {"id":3,"player_name":"Alyse","characters":[{"id":6,"name":"Mucca","charClass":"Barbarian","race":"Half-Orc"}]}
+VM13697:3 a is {"id":24,"player_name":"blah","characters":[]}
+VM13697:4 b is {"id":4,"player_name":"John","characters":[{"id":5,"name":"Leena","charClass":"Fighter","race":"Dragonborn"}]}
+VM13697:3 a is {"id":26,"player_name":"cdcd","characters":[{"id":22,"name":"yep","charClass":"Barbarian","race":"Dwarf"},{"id":23,"name":"yep yep yep","charClass":"Barbarian","race":"Dwarf"},{"id":24,"name":"sup","charClass":"Barbarian","race":"Dwarf"},{"id":25,"name":"yep","charClass":"Barbarian","race":"Dwarf"},{"id":26,"name":"yep yep yep","charClass":"Cleric","race":"Halfling"},{"id":27,"name":"dsadas","charClass":"Barbarian","race":"Dwarf"}]}
+VM13697:4 b is {"id":24,"player_name":"blah","characters":[]}
+VM13697:3 a is {"id":29,"player_name":"123","characters":[]}
+VM13697:4 b is {"id":26,"player_name":"cdcd","characters":[{"id":22,"name":"yep","charClass":"Barbarian","race":"Dwarf"},{"id":23,"name":"yep yep yep","charClass":"Barbarian","race":"Dwarf"},{"id":24,"name":"sup","charClass":"Barbarian","race":"Dwarf"},{"id":25,"name":"yep","charClass":"Barbarian","race":"Dwarf"},{"id":26,"name":"yep yep yep","charClass":"Cleric","race":"Halfling"},{"id":27,"name":"dsadas","charClass":"Barbarian","race":"Dwarf"}]}
+VM13697:3 a is {"id":32,"player_name":"newplayer","characters":[{"id":38,"name":"Kelly","charClass":"Paladin/1","race":"Dragonborn"}]}
+VM13697:4 b is {"id":29,"player_name":"123","characters":[]}
+VM13697:3 a is {"id":36,"player_name":"kellypwoers","characters":[]}
+VM13697:4 b is {"id":32,"player_name":"newplayer","characters":[{"id":38,"name":"Kelly","charClass":"Paladin/1","race":"Dragonborn"}]}
+VM13697:3 a is {"id":47,"player_name":"kellypowers","characters":[{"id":40,"name":"kellyschar","charClass":"Fighter/1","race":"Human"}]}
+VM13697:4 b is {"id":36,"player_name":"kellypwoers","characters":[]}
+VM13697:3 a is {"id":48,"player_name":"morgan","characters":[{"id":44,"name":"rtth","charClass":"Barbarian","race":"Dwarf"},{"id":43,"name":"dwadwadw","charClass":"Barbarian/1/1","race":"Dwarf"},{"id":45,"name":"new!","charClass":"Barbarian/1","race":"Dwarf"},{"id":42,"name":"morganschar","charClass":"Druid","race":"Dragonborn"}]}
+VM13697:4 b is {"id":47,"player_name":"kellypowers","characters":[{"id":40,"name":"kellyschar","charClass":"Fighter/1","race":"Human"}]}
+VM13697:3 a is {"id":51,"player_name":"Juan","characters":[]}
+VM13697:4 b is {"id":48,"player_name":"morgan","characters":[{"id":44,"name":"rtth","charClass":"Barbarian","race":"Dwarf"},{"id":43,"name":"dwadwadw","charClass":"Barbarian/1/1","race":"Dwarf"},{"id":45,"name":"new!","charClass":"Barbarian/1","race":"Dwarf"},{"id":42,"name":"morganschar","charClass":"Druid","race":"Dragonborn"}]}
+
+
+fetch(baseUrl).then(res => res.json()).then(players => {
+    players.sort(function(a, b){
+      console.log("a is " + a.player_name);
+      console.log("b is " + b.player_name);
+      return a.player_name-b.player_name});})
+
+    
+Promise {<pending>}
+VM14421:3 a is Erin
+VM14421:4 b is Kelly
+VM14421:3 a is Alyse
+VM14421:4 b is Erin
+VM14421:3 a is John
+VM14421:4 b is Alyse
+VM14421:3 a is blah
+VM14421:4 b is John
+VM14421:3 a is cdcd
+VM14421:4 b is blah
+VM14421:3 a is 123
+VM14421:4 b is cdcd
+VM14421:3 a is newplayer
+VM14421:4 b is 123
+VM14421:3 a is kellypwoers
+VM14421:4 b is newplayer
+VM14421:3 a is kellypowers
+VM14421:4 b is kellypwoers
+VM14421:3 a is morgan
+VM14421:4 b is kellypowers
+VM14421:3 a is Juan
+VM14421:4 b is morgan
