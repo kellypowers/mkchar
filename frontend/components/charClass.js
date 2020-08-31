@@ -6,16 +6,11 @@ class CharClass extends Race {
       this.selectClassModifiers()
     }
     selectClassModifiers(){
-      // if(this.charClass == "Paladin") {
-      //   this.hitDice = "1d10"
-      //   this.hp = 10 + this.modifier(this.constitution)
-      // }
       switch (this.charClass) {
         case 'Barbarian':
           this.hitDice = "1d12";
           this.hp += Math.floor(Math.random()*12+1) + this.modifier(this.constitution);
           this.saving_throws.push("Strength", "Constitution");
-          // console.log(`hp under class is ${this.hp}`);
           break;
         case 'Bard':
           this.hitDice = "1d8";

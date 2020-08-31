@@ -7,14 +7,12 @@ class Race extends UniversalCharacter {
     }
   
     selectRaceModifiers(){
-      // console.log('in race modifier ' + this.hp);
       switch (this.race) {
         case 'Dwarf':
           this.constitution += 2;
           this.hp += 1;
           this.alignment += "Lawful";
           this.proficiencies = this.proficiencies.push("History");
-          // console.log('hp under race class is' + this.hp);
           break;
         case 'Elf':
           this.dexterity += 2;
